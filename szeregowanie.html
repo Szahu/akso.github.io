@@ -1,0 +1,690 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>3. Szeregowanie</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-interactiveBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="5c76eb53-0813-41c3-8039-39060d248c51" class="page sans"><header><h1 class="page-title">3. Szeregowanie</h1><p class="page-description"></p></header><div class="page-body"><h1 id="f5d98518-9ce6-41e9-ac24-0d05dacf3c41" class="">Szeregowanie krótkoterminowe procesów </h1><p id="4bdc3a0e-b671-42b1-ae83-cd6a4bf03018" class="">W różnych sytuacjach trzeba decydować komu w następnej kolejności przyznamy procesor, takie sytuacje to między innymi: aktywny proces przechodzi na gotowy, aktywny proces przechodzi na wstrzymany, jakiś wstrzymany lub nowy proces staje się gotowy itp. </p><p id="ff7b67f0-397d-4b82-8e42-22910f75590c" class="">Szeregowanie <strong>niewywłaszczające </strong>vs <strong>wywłaszczające</strong>: w tym pierwszym SO nie może na siłę odebrać procesowi procesora, w tym drugim SO może odebrać procesor procesowi, który jeszcze się nie zakończył. W dzisiejszych SO używa się głównie szeregowania wywłaszczającego. </p><h3 id="9cd5ba15-f36d-4473-a0da-57e7d8724d3c" class="">Szeregowanie niewyłaszczające</h3><p id="b8589aba-959e-4549-bb44-1611707afa6b" class="">Prosta metoda, jak proces się zaczyna no to musi się skończyć. Takie rozwiązanie jest stosowane w systemach bez czasomierza. W takim modelu są mniejsze problemy synchronizacyjne ale za to jest większy czas oczekiwań. </p><h3 id="4856cfb8-9089-44e8-9fa1-7746d07ac650" class="">Szeregowanie wywłaszczające</h3><p id="33082e7e-46c2-4675-8420-c788cb04b652" class="">Tutaj skoro możemy mieć kilka procesów jednocześnie musimy zadbać o synchronizacje dostępu do danych dzielonych. Pojawia się problem, co zrobić z procesem jak mu się skończy czas akurat gdy jest w trakcie wykonywania operacji jądra, tutaj są dwa podejścia: </p><ul id="f17b44b0-9ca7-4615-908b-6a8b30a828f5" class="bulleted-list"><li style="list-style-type:disc">Jądru niewywłaszczalne - czekamy, aż jądro skończy swoje operacje (proces może również zrezygnować z procesora podczas wykonywania operacji jądra) </li></ul><ul id="e0777af3-34e7-4a65-b4fb-11ea1b0dbb34" class="bulleted-list"><li style="list-style-type:disc">Jądro wywłaszczalne - przełączamy kontekst od razu</li></ul><h3 id="29c0f885-5bfa-4301-867a-fa1961a837e3" class="">Ekspedytor</h3><p id="7b6dedd7-b280-45d3-8250-754855a46926" class="">Ekspedytor to fragment kodu odpowiedzialny za przełączenie kontektu, wejście w tryb użytkownika oraz skok do opwiedniego miejsca w pamięci aby znaleźć kod procesu do wykonania. Oczywiście, ważne aby ten kod był w miarę szybki aby ogranicznyć overhead. Czas, który mija od wstrzymania jednego procesu do rozpoczęcia następnego jest nzaywany <strong>opóźnieniem ekspedycji</strong>.</p><h3 id="233afbe3-548f-4ca0-b76c-2587df08a047" class="">Miary wykorzystania systemu</h3><ul id="39c91343-9475-4e1d-9570-5e2f4ec11b02" class="bulleted-list"><li style="list-style-type:disc">Wykorzystanie procesora - część czasu, w którym procesor wykonuje operacje użytkownika (nie administracyjne). </li></ul><ul id="0963ab3c-e113-4207-bded-12066a755ad0" class="bulleted-list"><li style="list-style-type:disc">Przepustowość - ile procesów kończy się w danej jednostce czasu </li></ul><ul id="b04d0426-351b-45e7-8b88-2eda28abfdbd" class="bulleted-list"><li style="list-style-type:disc">Czas obrotu zadania - ile mija czasu od momentu pojawienia się nowego procesu do jego zakończenia.</li></ul><ul id="5530ef19-1dbd-48b6-93e9-6af63d772fca" class="bulleted-list"><li style="list-style-type:disc">Czas oczekiwania - suma wszystkich czasów, jakie proces spędził na czekaniu w kolejce zamiast być wykonywanym. </li></ul><ul id="3bc62e34-f796-4ef7-a758-beff6f2be3f2" class="bulleted-list"><li style="list-style-type:disc">Czas odpowiedzi (reakcji) - czas jaki mija między wysłaniem do procesu żądania, a jego odpowiedzią. </li></ul><h2 id="8dad6b5f-a054-42b6-a14e-0b60e644ef12" class="">Algorytmy Szeregujące</h2><p id="f5b48ba6-d928-40eb-83e8-b21e7aa23ba5" class="">Oczywiście algorytmy szeregujące są różne i zależą od przeznaczenia systemu lub jego specyfikacji. </p><p id="229c9f6e-9962-440f-94f3-02b34cb7da35" class="">Celem algorytmu szeregującego jest przedewszystkim realizowanie polityki systemu (np. w Linuxie polega to na priorytetowaniu procesów czasu rzeczywistego). Szeregowanie ma zatem zapewniać “uczciwy” dostęp do procesora dla każdego procesu, i ma to zrobić tak aby równomiernie korzystać z zasobów i równomiernie obciążać wszystkie składowe systemu.</p><p id="d17cdeb5-4f89-463a-800e-ab8362fa1f08" class="">Naprzykład, w systemach wsadowych polityką jest maksymalizacja wykorzystania procesora i przepustowości oraz minimalizacja obrotu, a w systemach interaktywnych system chce zagwarantować szybki czas odpowiedzi oraz stara się zapewnić stały czas odpowiedzi.  </p><h3 id="cea36d88-574a-4755-8b88-f809e39076fa" class="">Algorytm FCFS (<em>First Come First Served</em>)</h3><p id="5f4ad80d-97cc-4fbc-b508-d7dc267fd2dd" class="">Zwykła kolejka prosta, jest to szeregowanie niewywłaszczające (nie ma ograniczonego czasu dla użytku procesora). Zamysł jest banalny: ustwiamy PCB procesów w zwykłej kolejce i zawsze bierzemy PCB na samej górze i dajemy mu procesor, a jak jakiś proces chce wejść do kolejki to jest dodawany na sam dół. 
+Algorytm jest prosty do zaimplementowania, ale średni czas oczekiwania może być długi, oraz jest duża wariancja w czasie oczekiwania bo nie jest to w ogóle kontrolowane. 
+Efekt konwoju: jak jest jeden proces z długą fazą procesora, i 1000 procesów z krótką fazą procesora to każdy taki mały proces musi czekać sekunde żeby znów wykonać kolejną z wielu operacje wejścia-wyjścia, co jest bardzo wolne, zatem taki algorytm nie nadaje się do systemów z podziałem czasu.</p><h3 id="daad7530-16e6-4e5f-bebc-6eeb00e9d68e" class="">Algorytm SJF (<em>Shortes Job First</em>)</h3><p id="06b781a8-5277-4918-b3b6-d70fe3d97dba" class="">Ten algorytm również jest niewywłaszczający, ale kolejka już staję się priorytetowa a nie prosta. Wybieramy zawsze najpierw ten proces, który będzie najkrócej korzystał z procesora. 
+W teorii fajnie, bo optymalizujemy czas oczekiwania, ale problem jest dosyć prosty: nie wiadomo ile proces będzie potrzebował procesora (a nie możemy zabrać procesora po jakimś czasie bo jest to szeregowanie niewywłaszczające). 
+Można szacować fazy na podstawie długości poprzednich faz danego procesu, ale teraz może nastąpić zagłodzenie jakieś procesu, który potrzebuje dużo procesora bo na początek kolejki mogą się wpychać procesy, które mało korzystają z procesora. </p><h3 id="6a7bc578-abb5-4551-b5f1-7a3bfa62157d" class="">Algorytm SRTF (<em>Shortes Remaining Time First</em>)</h3><p id="c3df9f93-8f2c-4200-854e-bdb6fb66d8c1" class="">Jest to wywłaszczająca wersja algorytmu SJF. Działa w sposób następujący: jeśli pojawia się proces, który potrzebuje krótszą fazę procesora niż długość fazy pozostałej aktualnie wykonywanu procesowi, to następuje wywłaszczenie - zabieramy procesor i przyznajemy go temu nowu procesowi. 
+Tutaj znowu trzeba jakoś wyliczyć ile będzie trwała faza danego procesu, albo oblicza to jakoś SO, albo może być, że użytkownik narzuca pewne priorytety dla odpalonych przez siebie procesów. 
+Tutaj tak jak wyżej, znów istnieje możliwość zagłodzenia procesu, można z tym walczyć obniżając priorytet procesów, które właśnie się wykonały. </p><h3 id="fe67886e-1bb3-4f14-9364-ad9f440b9262" class="">Algorytm Round-Robin - szeregowanie rotacyjne </h3><p id="c10f4ce6-a915-4a6b-ac20-e7b319a6c335" class="">Jest to wywłaszczająca wersja algorytmu FCFS, bierezmy proces z kolejki, pracuje on przez kwant czasu, jak skończy to idzie na koniec kolejki, i tak dalej. Powoduje to konieczność obecności czasomierza w systemie. 
+Wydajność tego algorytmu zależy od wyboru kwantu czasu, chcemy zminimalizować ilość przełączeń kontekstu, ale nie za bardzo, zatem chcemy aby kwant czasu być dostatecznie długi ale nie za długi, bo w takim przypadku algorytm zaczyna działać jak FCFS. 
+Po za tym długi kwant czasu zwalnia czas reakcji procesów, ważne w systemach interaktywnych. </p><h3 id="e8c868b4-33ce-4c80-98fe-54cb05e37bda" class="">Szeregowanie Wielopoziomowe </h3><p id="936a2615-6b33-4c29-b5e9-2d651ece2fa5" class="">Mamy wiele kolejek dla różnych grup procesów, np. procesu czasu rzeczywistego, procesy systemowe, procesy interakcyjne itp. 
+Każda grupa procesów może mieć inny algorytm szeregujący aby najlepiej szeregować procesy z danej grupy. 
+Musimy również przyjąć jakąś zasade wyboru kolejki, z której musimy wybrać następny proces, np: procesy systemowe zawsze mają priorytet, lub umawiamy się, że 4 na 5 razy bierzemy proces systemowy a 1 na 5, proces użytkownika. 
+Taki algorytm jest wyposażony w sprzężenie zwrotne, jeśli jakiś proces wykorzystuje dużo procesora to jest przenoszony do innej kolejki o niższym priorytecie. 
+Tego używa się w prawdziwych systemach operacyjnych. </p><h3 id="e8d2f14f-c3a7-4800-a587-854c97bc50c4" class="">Szeregowanie Loteryjne</h3><p id="abb8441c-e40e-496f-a8aa-9fd17a8472ac" class="">Procesy dostają losy na różne zasoby, SO urządza loterję, losuje numery i procesom z wygranymi losami przyznaje dany zasób. Procesy mogą według priorytetów dostawać różną ilość losów, a procesy, które współpracują mogą się wymieniać losami.Ten algorytm raczej nie jest wykorzystywany w praktyce. </p><h1 id="7b12a9e1-65f7-44a2-98a4-1b7e9b48588a" class="">MINIX</h1><p id="f6601d85-ffab-499d-9880-56f82750ed0f" class="">Minix jest systemem a minimalnej funkcjinalności stworzonym w celach edukacyjnych. Jądro oferuje jedynie minimalną funkcjonalność, a wiele zadań systemu operacyjnego jest realizowane przez procesy działające w trybue uprzywilejowanym. Procesy można podzielić na 4 warstwy: </p><ul id="809f86fb-8839-456c-97c4-0ad75da4c0e0" class="bulleted-list"><li style="list-style-type:disc">Warstwa 1 - zadania zegara, zadania systemowe: rzeczy, które znajdują się w tym mikrojądrze) </li></ul><ul id="4f37c49b-a9fb-490f-9e9c-3811e1564a74" class="bulleted-list"><li style="list-style-type:disc">Warstwa 2 - zadania obsługujące urządzenia</li></ul><ul id="e095d26c-0052-4ac5-9b5b-1b5caffb2590" class="bulleted-list"><li style="list-style-type:disc">Warstwa 3 - procesy systemowe</li></ul><ul id="fa91d88d-7f1a-4507-84ca-4eb43752f78f" class="bulleted-list"><li style="list-style-type:disc">Warstwa 4 - zwykłe procesy użytkownika</li></ul><h3 id="440caa8d-264c-47d6-8f38-18efbc205d2f" class="">Szeregowanie w MINIX-e </h3><p id="15c13634-7519-4b6c-a83f-1404572374b4" class="">W tym systemie działa szeregowanie wielopoziomowe z 16 kolejkami, oczywiście priorytet jest ustawiony tak jak warstwy procesów, im mniejsza warstwa tym większy priorytet. </p><p id="eddd87de-3c10-4dfd-9d1d-2d5265c56f76" class="">Procesy z różnych wartw mogą dostawać różne kwatny czasu, ten system poniekąd wykonuje zadania obsługi urządzeń i systemowe w sposób niewywłaszczalny, tak naprawde jest to sposób wywłaszczalny, ale te procesy dostają duży kwant czasu, więc jest duża szanasa, że raczej same będą się zrzekać procesora zamiast wyczerpać cały kwant. </p><p id="faa596d5-1bd4-4e8f-8fd5-d3ffdcdb6313" class="">Proces jak skończy wykonywać swoją pracę to jego priorytet jest obniżony, ale co jakiś czas wszystkie procesy mają ziększany priorytet, aż nie wrócą do swojego oryginalengo priorytetu. </p><p id="cd09e012-3319-446a-9604-14abd3540eeb" class="">Używa się tutaj standardowego Round-Robina, aczkolwiek proces, który nie wykorzystał swojego kwantu, to wraca na początek kolejki i może wykończyć swój kwant. Jak proces wykorzysta swój kwant to idzie normalnie na koniec kolejki. </p><p id="851c0f81-d15b-4cb1-97e4-c6b573d8e744" class="">Do wykonania zawsze wybieramy pierwszy proces z kolejki o największym priorytecie, tutaj nie ma możliwości zagłodzenia ponieważ procesy systemowe reagują na zlecenia od procesów użytkownika i wysyłają zlecenia zadaniom obsługi urządzeń. </p><h1 id="29f41842-5e10-405b-850d-f8c6ba7121b0" class="">Systemy czasu rzeczywistego </h1><p id="ff1250fb-eb2a-4257-a626-939dd817cb8b" class="">Systemy reaktywne, to taki, który działa w sposób ciągły - dostaje dane wejściowe i musi zagwarantować reakcje w rozsądnym czasie.</p><p id="61776a3d-6f98-47c3-b39f-fe0b8b2dcf75" class="">Systemy czasu rzeczywsitego to systemy reaktywne ze ścisłymi ograniczeniami na czas reakcji. </p><p id="baced533-2661-45ad-a40e-69c587cd4ad1" class="">W systemie operacyjnym przecznaczonym dla systemu czsu rzeczywistego zadania są inne niż w zwykłym SO, tutaj procesy nie rywalizują o procesor, a współpracują, żeby wykonać wspólny cel w jak najszybszym czasie. Z tego względu zadania jaknajszybciej wykonują swoją prace i są wstrzymywane, ze względu na to, raczej nie korzysta się z wywłaszczania. Chcemy zapewnić szybki czas reakcji i uniknąć nieprzewidywalności związanej z wywłaszczaniem.</p><h3 id="32bb693c-fbb2-44be-8220-b73a6c1b1eb8" class="">Parametry procesów w systemach czasu rzeczywistego: </h3><ul id="1d59a6fb-9544-4c33-a1a6-ef4da7467941" class="bulleted-list"><li style="list-style-type:disc">Termin uwolnienia - moment, w którym zadanie staje się gotowe do wykoniania</li></ul><ul id="55d989e9-ad39-4099-9336-d60f73f6c6f2" class="bulleted-list"><li style="list-style-type:disc">Czas wykonania - maksymalny czas trwania wykonania zadania</li></ul><ul id="6d966a86-fc9a-4c1d-af3e-a6dc6611e792" class="bulleted-list"><li style="list-style-type:disc">Czas reakcji - czas od chwili uwlonienia do czasu wykonania</li></ul><ul id="dc6be147-2e88-45f2-9c25-063bb1a5ec67" class="bulleted-list"><li style="list-style-type:disc">Termin ostateczny - maksymalny dopuszczalny czas odpowiedzi zadania</li></ul><h3 id="4d0e3f3f-cb3d-4a2c-bd39-e156105415af" class="">Terminy ostateczne</h3><p id="f740973b-e940-4881-b277-4646dab8fa8d" class="">Terminy ostateczne mogą być albo sztywne albo elastyczne. Jak nazwa wskazuje termin sztywny nie może być przekroczony pod żadnym pozorem, natomiast termin elastyczny może być przekroczony z jakimś prawdopodobieństwem. </p><h3 id="e87eff94-d0cf-4273-88fa-daa80f2e7550" class="">Rodzaje zadań</h3><ul id="ed42fa0f-20af-4134-b6cb-a6e2e10cf4d3" class="bulleted-list"><li style="list-style-type:disc">Okresowe - czyli takie zadania, które się powtarzają cyklicznie w określonych odstępach czasu (okres)</li></ul><ul id="fac2f595-73c1-4a69-bbe8-3f05cdf5e0de" class="bulleted-list"><li style="list-style-type:disc">Sporadyczne - zadania, które nie są okresowe i mają sztywny termin ostateczny</li></ul><ul id="2fd31771-688a-4a9e-a179-920a3ec43649" class="bulleted-list"><li style="list-style-type:disc">Nieokresowe - takie, które nie są okresowe ale mają elastyczne terminy ostateczne </li></ul><h2 id="4949a4b9-925e-47a4-a36e-18cb0ac66c27" class="">Szeregowanie w systemach czasu rzeczywistego </h2><p id="26f776df-1c6b-4ffe-9261-f6d652e86690" class="">Mamy dwa cele, które chcemy spełnić szeregując zadania w SO dla systemu czasu rzeczywistego: zapewnić dotrzymanie terminów uruchomienia poszczególnych procesów oraz zapewnienie przewidywalności i powtarzalności. </p><h3 id="aed80bca-0452-459a-8870-8a4192347715" class="">Szeregowanie synchrocznie </h3><p id="24353a65-42f3-4cda-8edb-7114ac5041b2" class="">W tym schemacie zanium uruchomimy system, już jest ustalone szeregowanie zadań systemu. Czas procesora dzielimy na ramy o ustalonej długości (<em><em>frames</em></em>), ustalamy to tak aby na jedną ramy przypadało jedno zadanie, nie mniej nie więcej, każde zadanie musi się zmieścić w ramie. </p><p id="b67dfdae-a900-4e76-ba2b-52781027658c" class="">W tablicy wymagań czasowych są zapisane dla każdego zadania określamy ich długości (wyrażona w liczbie ram potrzebnych na wykonanie) oraz częstotliwośc wykonania (również w ramach). </p><p id="786a75da-d951-4efc-9a4e-c3d82ecbea91" class="">Teraz w tablicy szeregującej zapisujemy sobie dla kolejnych ramek jakie zadanie będziemy wykonywać.</p><p id="24015ef5-bee8-4700-a550-2944bfb76f2b" class="">Co się dzieje, gdy zadanie nie mieści się w ramie? Wtedy dzielimy zadanie na kilka części tak aby każda się zmieściła w ramie. </p><p id="d10e1133-427d-4791-931b-0f1e1f6ce5a7" class="">W sytuacji gdy zmieni się rozmiar ramy to znów trzeba przeliczyć nową tablicę szeregującą. Podobnie jak zmienimy kod zadania, no to trzeba znów sprawdzić czy zadanie mieści się w wyznaczonych ramach, a jeśli nie to na nowo policzyć tablicę szeregującą. </p><p id="99cd8aaa-c97a-4c8b-851a-c918f803d231" class="">Szeregowanie synchroniczne jest prosty, przewidywalny i szybki. Również programista nie musi chronić żadnych zmiennych globalnych bo dwa procesy nie wykonują się jednocześnie. </p><h3 id="a28d973c-c729-4579-88f4-9bac8424ac25" class="">Szeregowanie asynchronicznie </h3><p id="0785d220-6ba6-41b0-9c9f-f4ea1dc38f1e" class="">Zwykłe szeregowanie bez ustawionego momentu przełączenia kontekstu, tutaj znów możemy rozważyć sytuację z wywłaszczaniem i bez wywłaszczenia. Jeśli nie korzystamy z wywłaszczenia pojawią się problemy z nieprzewydiwalnością i dotrzymywaniem terminów, zatem raczej chcemy korzystań szeregowania z wywłaszczaniem. </p><p id="8c206d09-d78c-45f8-afe0-1842e92362ed" class="">Taki model może prowadzić do natąpienia zjawizka zwanego odwróceniem priorytetów, może dojść do sytacji, że wykonuje się zadanie o mniejszym priorytecie, gdy gotowe jest zadanie o priorytecie wyższym. Próba zwalczenia tego problemu polega na <strong>dziedziczeniu priorytetów</strong>, mianowicie tymczasowo zwiększamy priorytet  procesu w sekcji krytycznej, który blokuje proces o wyższym priorytecie, aby jak najszybciej zwolnić sekcję krytyczną dla procesu o wysokim priorytecie. </p><h3 id="4e0fb707-6790-4e5a-be6b-1ab8b27bb846" class="">Sensowność i optymalność algorytmu szeregującego </h3><p id="0f75deec-2d15-4a4d-b8be-b5aee4c43666" class="">Mówimy, że przydział jest <strong>sensowny </strong>jeśli możemy zagwarantować, że każde zadanie zostanie wykonane przed upływem ich terminu ostatecznego. </p><p id="bad3c2e3-b745-489e-8c84-0b5feea05c20" class="">Algorytm szeregujący <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi></mrow><annotation encoding="application/x-tex">A</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal">A</span></span></span></span></span><span>﻿</span></span> jest <strong>optymalny </strong>w klasie algorymtów <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>C</mi></mrow><annotation encoding="application/x-tex">C</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span></span></span></span></span><span>﻿</span></span>, wtw gdy jeśli algorytm szreregujący <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi><mo>∈</mo><mi>C</mi></mrow><annotation encoding="application/x-tex">B \in C</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72243em;vertical-align:-0.0391em;"></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span></span></span></span></span><span>﻿</span></span> szereguje jakieś zadania sensownie, to <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi></mrow><annotation encoding="application/x-tex">A</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal">A</span></span></span></span></span><span>﻿</span></span> również. </p><h3 id="e7f406ae-389b-4455-8373-7b7741fae777" class="">Jak wybierać kolejne zadanie</h3><ul id="5f729c0a-2d70-498d-bf28-26c19ed3920d" class="bulleted-list"><li style="list-style-type:disc">Szeregowanie względem malejących przerw (<em>rare monotonic</em>) - im krótrszy termin zadania tym większy priorytet. Jest to algorytm optymalny w klasie algorytmów ze stałymi priorytetami. Jest sensowny o ile </li></ul><figure id="cc44bbb4-aa8f-42f4-b542-9bcbaa53ad25" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><munder><mo>∑</mo><mi>i</mi></munder><mfrac><msub><mi>e</mi><mi>i</mi></msub><msub><mi>p</mi><mi>i</mi></msub></mfrac><mo>≤</mo><mi>n</mi><mo stretchy="false">(</mo><msup><mn>2</mn><mfrac><mn>1</mn><mi>n</mi></mfrac></msup><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\sum_i \frac{e_i}{p_i} \leq n(2^{\frac{1}{n}}-1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:2.385229em;vertical-align:-1.277669em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.0500050000000003em;"><span style="top:-1.872331em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span><span style="top:-3.050005em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.277669em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.1075599999999999em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathnormal">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathnormal">e</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.8804400000000001em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.2540200000000001em;vertical-align:-0.25em;"></span><span class="mord mathnormal">n</span><span class="mopen">(</span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:1.0040200000000001em;"><span style="top:-3.4130000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mopen nulldelimiter sizing reset-size3 size6"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8443142857142858em;"><span style="top:-2.656em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">n</span></span></span></span><span style="top:-3.2255000000000003em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line mtight" style="border-bottom-width:0.049em;"></span></span><span style="top:-3.384em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.344em;"><span></span></span></span></span></span><span class="mclose nulldelimiter sizing reset-size3 size6"></span></span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span></span></span></span></span></div></figure><ul id="34c35306-b4a4-41b1-bb98-43c509a08a75" class="bulleted-list"><li style="list-style-type:disc">Szeregoanie względem nabliższego terminu ostatecznego - największy priorytet zawsze ma zadanie o najbliższym deadlinie. Taki algorytm jest optymalny w klasie algorytmów szeregujących, jest sensowny pod warunkiem, że <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>e</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">e_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">e</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span>-czas działania zadania <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathnormal">i</span></span></span></span></span><span>﻿</span></span>, <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>p</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">p_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathnormal">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span>- okres.
+</li></ul><figure id="0505b1ff-0fd0-4da6-960e-eb1dba9eedcc" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><munder><mo>∑</mo><mi>i</mi></munder><mfrac><msub><mi>e</mi><mi>i</mi></msub><msub><mi>p</mi><mi>i</mi></msub></mfrac><mo>≤</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\sum_i \frac{e_i}{p_i} \leq 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:2.385229em;vertical-align:-1.277669em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.0500050000000003em;"><span style="top:-1.872331em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span><span style="top:-3.050005em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.277669em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.1075599999999999em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathnormal">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathnormal">e</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.8804400000000001em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span></span></div></figure><hr id="0c58a8d7-594c-4b77-8c35-9b1e2b3b0437"/><h1 id="29247d2e-9c09-468a-823a-4887e991e303" class="">Zakleszczenia </h1><p id="dab9da52-3acb-4b7e-ba70-bc0f4d746490" class="">Zbiór procesów <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi></mrow><annotation encoding="application/x-tex">P</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span></span></span></span></span><span>﻿</span></span> jest w stanie zakleszczenia, gdy każdy proces z <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi></mrow><annotation encoding="application/x-tex">P</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span></span></span></span></span><span>﻿</span></span> czeka na zdarzenie, które może być spowodowane tylko przez inny proces z <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi></mrow><annotation encoding="application/x-tex">P</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span></span></span></span></span><span>﻿</span></span>. </p><p id="c6c8cea9-2ace-4275-9234-2cf9a70beb42" class="">Do zakleszczeń dochodzi wtedy, gdy wszystkie następujące warunki są spełnione: </p><ul id="a70168e2-4cd4-4afe-b524-f293054a8d17" class="bulleted-list"><li style="list-style-type:disc"><strong>niepodzielność </strong>co najmniej jednego zasobu.</li></ul><ul id="4bc66a54-505c-4a07-ae0e-b23076248636" class="bulleted-list"><li style="list-style-type:disc"><strong>przetrzymywanie</strong> i <strong>oczekiwanie </strong>- pewien proces otrzymał co najmniej jeden zasób i oczekuje na inny przetrzymywany przez inny proces zasób</li></ul><ul id="cc8fe220-e21b-450e-bfbf-312706617713" class="bulleted-list"><li style="list-style-type:disc"><strong>brak wywłaszczeń </strong>- zasób może zwolnić zasób jedynie dobrowolnie</li></ul><ul id="6fd881ec-c76f-4bc9-bd01-94ce5477a6f9" class="bulleted-list"><li style="list-style-type:disc"><strong>czekanie cykliczne </strong>- jest jakiś zbiór procesów <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">{</mo><msub><mi>P</mi><mn>0</mn></msub><mo separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><msub><mi>P</mi><mi>n</mi></msub><mo stretchy="false">}</mo></mrow><annotation encoding="application/x-tex">\{P_0, …, P_n\}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">{</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner">…</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">}</span></span></span></span></span><span>﻿</span></span>, że każdy <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>P</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">P_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> czekan na <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>P</mi><mrow><mi>i</mi><mo>+</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">P_{i+1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.891661em;vertical-align:-0.208331em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span>, a <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>P</mi><mi>n</mi></msub></mrow><annotation encoding="application/x-tex">P_n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> czeka na zasób przetrzymywany przez <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>P</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">P_0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span>. </li></ul><p id="6457d39c-7783-453c-a4f0-602bca44e3fb" class="">Jeśli system jest w stanie zakleszczenia to w grafie zasobów istnieje cykl (implikacja <strong>tylko </strong>w jedną stronę):</p><h2 id="698b6658-e2e0-42f5-9342-97bd69343dc9" class="">Jak walczyć z zakleszczeniami? </h2><h3 id="a0eee7dc-facc-4641-ba21-57388a8a7b48" class="">Zapobieganie</h3><p id="febceb5a-f187-4628-8763-b1abbe66c7db" class="">Upewniamy się, że jeden z warunków powstania zakleszczenia nigdy nie będzie spełniony: </p><ul id="116624e2-90cc-41d5-9d2d-60592ec93a83" class="bulleted-list"><li style="list-style-type:disc">niepodzielność co najmniej jednego zasobu - tego nie da się zrobić, w niektórych przypadkach możemy wprowadzić wirtualną niepodzielność (naprzykład kolejkować zadania dla drukarki).</li></ul><ul id="5a264d83-1408-4b02-ad38-321a14b48247" class="bulleted-list"><li style="list-style-type:disc">Przetrzymywanie i oczekiwanie - można naprzykład wprowadzić zasadę, że nie wolno przetrzymywać zasobów ale w konsekwencji mamy małe wykorzystywanie zasobów, ewentualne głodzenie. </li></ul><ul id="2778e363-d3d7-4ddc-aa27-75f62868cacc" class="bulleted-list"><li style="list-style-type:disc">brak wywłaszczeń zasobów - jest to do zrobienia ale znów może to powodować zagłodzenie. </li></ul><ul id="3d40295b-41a5-4430-a378-9d9c93017fa2" class="bulleted-list"><li style="list-style-type:disc">czekanie cykliczne - można numerować zasoby i procesy i tylko przyznawać zasoby tylko pewnym procesom, ale to ma duży wpływ na efektywność szeregowania. </li></ul><h3 id="40b79676-eed0-4286-b979-715c332e9033" class="">Unikanie zakleszczeń - stany bezpieczne </h3><p id="73190f59-4376-420e-8e37-80dd44f1f4f5" class="">Wymagamy aby każdy proces z góry się określił ile będzie potrzebował zasobów przez całe swoje życie. <strong>Stanem bezpiecznym </strong>nazywamy stan, gdzie każdemu procesowi możemy przydzielić w stopniu maksymalnym tak aby nie powstało zakleszczeń - jak system jest w stanie bezpiecznym to tak może zarządzać prośbami procesów o zasoby, żeby nie doszło do zakleszczenia. 
+Jak stan nie jest stanem bezpiecznym, to jest <strong>stanem zagrożenia</strong>, taki stan może prowadzić do zakleszczenia ale nie jest to konieczność.  
+Mówimy, że ciąg procesów <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">⟨</mo><msub><mi>P</mi><mn>1</mn></msub><mo separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><msub><mi>P</mi><mi>n</mi></msub><mo stretchy="false">⟩</mo></mrow><annotation encoding="application/x-tex">\langle P_1, …, P_n \rangle</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">⟨</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner">…</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">⟩</span></span></span></span></span><span>﻿</span></span> jest bezpieczny w pewnym stanie, jak zapotrzebowanie <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>P</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">P_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> może zostać zaspokojone przez dostepne zasoby lub zasoby używane przez procesy o mniejszym indeksie. </p><p id="b4eba73d-f578-4857-a3c8-45121e03cd0c" class="">Do takiego zarządzania, używa się <strong>algorytmu bankiera</strong>. </p><p id="27c63834-96ac-4e75-98dd-d851779f62ad" class="">
+</p></div></article></body></html>

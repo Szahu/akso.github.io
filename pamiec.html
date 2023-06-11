@@ -1,0 +1,678 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>4. Pamięć</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-interactiveBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="de2395ec-2588-477d-b8f6-d70f4b9faba2" class="page sans"><header><h1 class="page-title">4. Pamięć</h1><p class="page-description"></p></header><div class="page-body"><h1 id="f989ee3c-b5e6-44dc-b6db-46edd4879310" class="">Ważne koncepty: </h1><ul id="c345d41e-639a-4930-a411-dc64f2f8fb71" class="bulleted-list"><li style="list-style-type:disc">Wiązanie adresów (jak po co i kiedy nierelokowalne vs relokowalne), translacja adresów. </li></ul><h1 id="052d4132-5993-4236-83a9-b06e95b83a30" class="">Współpraca procesora i pamięci</h1><h3 id="c8f472ea-73c1-46cf-a0d1-4d1eade420dd" class="">Sprzętowa realizacja odzcytu z pamięci</h3><ol type="1" id="a5d180b6-2c4a-4990-b865-812c56607472" class="numbered-list" start="1"><li>Procesor generuje odwołanie do konkretnego adresu pamięci</li></ol><ol type="1" id="e28a45ce-e2cd-4e0c-9435-c80633da0d4d" class="numbered-list" start="2"><li>Adres jest umieszczany na szynie adresowej (dużo drucików, każdy drucik oznacza jeden bit) </li></ol><ol type="1" id="890bf27d-5024-4967-a7ac-db6039c53c57" class="numbered-list" start="3"><li>Pamięć odczytuje w ściśle określonych momentach czasu stan szyny adresowej i zawartość adresu umieszcza na szynie danych </li></ol><ol type="1" id="c0fe71b3-1356-4c2f-8de8-bb8d0d8c70c6" class="numbered-list" start="4"><li>Procesor odczytuje dane z szyny danych</li></ol><h3 id="628dbb0c-d36c-4a7a-9548-95295ba339d0" class="">Sprzętowa realizacja zapisu do pamięci</h3><ol type="1" id="1477d14f-3058-4deb-b7de-155de160809d" class="numbered-list" start="1"><li>Procesor generuje odwołanie do pamięci</li></ol><ol type="1" id="3e4d175e-9fb8-48dc-94ab-e355bc31779f" class="numbered-list" start="2"><li>Adres jest umieszczany na szynie adresowej</li></ol><ol type="1" id="a856f3f1-5f6f-4cb4-a3ae-8502b76a0c7e" class="numbered-list" start="3"><li>Pamięć odczytuje adres z szyny adresowej </li></ol><ol type="1" id="f111d7dc-de66-4c07-b0dc-4195b31f792e" class="numbered-list" start="4"><li>Procesor umieszcza dane na szynie danych </li></ol><ol type="1" id="eb76845c-2282-4fa7-80f0-8df51394f143" class="numbered-list" start="5"><li>Pamięć modyfikuje dane</li></ol><p id="e1fe4c41-c892-44ad-8988-8853754cc5f6" class="">Aby było wiadomo czy ma być odczyt czy zapis procesor i pamięć są połączone jeszcze jakimś drutem, który sygnalizuje o jaką operacje chodzi. </p><p id="6b7c71e1-f05f-4101-a766-891e5b0b34df" class="">Pamięć jest abstrakcyjna od procesora - dostaje adres i oddaje dane, niczym się nie przejmuje. </p><h1 id="f7b90928-2dd4-4f7d-8a7e-ff2bb6d42a47" class="">Wiązanie adresów</h1><p id="718f46ca-3b1b-4822-a968-b72a0db2f46c" class="">W kodzie źródłowym adresy w pamięci mają postać symboliczną: etykiety, zmienne lub wskaźniki. </p><p id="d167ec74-5b9c-47fc-9b7c-652c0f21ebe8" class="">Takie symbole należy połączyć z faktycznym fizycznym adresem w pamięci operacyjnej, takie wiązanie może być przeprowadzone w kilku momentach: </p><ul id="96ecd820-69a2-41e3-a1a4-7ba4920d0230" class="bulleted-list"><li style="list-style-type:disc">Na etapie kompliacji - kompilator zastępuje adresy symboliczne konkretnymi adresami, wtedy program ładujący odczytuje moduł ładowalny i umieszcza go w <strong>ściśle określonym miejscu </strong>w pamięci, w przeciwnym razie adresy nie będą się znajdowały tam gdzie mają być. 
+Taki program, jest modułem <strong>nierelokowalnym</strong>.</li></ul><ul id="4a0fb96e-1390-40a7-8286-a2bcc52333a9" class="bulleted-list"><li style="list-style-type:disc">Podczas ładowania - kompliator musi wyprodukować moduł <strong>relokowalny</strong>, gdzie na przykład wszystkie adresy są względne do adresu początku modułu. Program ładujący musi dokonać przeliczenia adresów względnych na adresy absolutne. Taki program może być umieszczony w dowolnym miejscu w pamięci. Jednak taki program nie może być przenoszony w inne miejsce w pamięci podczas wykonywania.  </li></ul><ul id="62bd2690-460c-4ea8-9630-3da069347eee" class="bulleted-list"><li style="list-style-type:disc">Podczas wykonania - kompilator produkuje moduł z adresami logicznymi, a program ładujący normalnie wczytuje moduł do pamięci. Wiązanie następuje w trakcie wykonania programu. Przy każdym odwołaniu <strong>sprzęt </strong>(MMU - <em>Memory Management Unit</em>)<strong> </strong>przekształca adres logiczny na adres fizyczny - <strong>translazja adresów</strong>. 
+Taki program jest <strong>relokowalny </strong>i można go przenosić dowolnie podczas wykonania.  </li></ul><h2 id="c7094419-d607-4411-8cdf-78934689d0ae" class="">Programy wielomodułowe</h2><p id="497b55fb-e617-45d3-bd7f-ae8003db7f9d" class="">Żadko programy są budowane z tylko jednego modułu, często moduły są kompilowane osobno i trzeba je połączyć w program wykonywalny, taki proces nazywa się <strong>konsolidacją</strong> (<em>linking</em>).</p><h3 id="dfff5ca8-bf63-427c-a52c-8ad914db67c0" class="">Łączenie statyczne</h3><p id="2821121d-872c-4fd1-83fb-7c6702d2c847" class="">Łaczenie na etapie tworzenia modułu ładowalnego, taki moduł ładowalny jest kompletny, już zawiera kod wszystkich potrzebnych modułów. Proste w realizacji i nie wymaga wsparcia SO, może również być wykonywane niezależnie od sposobu wiązania adresów. Problemem jest fakt, że każdy taki moduł nosi ze sobą kopie wszystkich swoich modułów bibliotecznych. </p><h3 id="14cf602d-f73a-4352-9713-bfc6957af001" class="">Ładowanie dynamiczne</h3><p id="9f89b4b1-f53d-4a68-9e87-8a0d64ba94b0" class="">W takim modelu moduł ładowalny zawiera jedynie program głowny, i tylko on jest początkowo wprowadzany do pamięci, reszta modułów znajduje się na dysku w postaci relokowalnej i są wczytywane wtedy gdy są potrzebne. </p><p id="faeada9e-e74c-419e-9be1-002f3e29f298" class="">Taki program musi być napisany tak, aby przed wywołaniem funkcji innego modułu, potrzebny moduł był ładowany do pamięci. Nie wymaga to specjalnego wsparcia systemu operacyjnego, SO udostępnia jedynie operacje do ładowania modułów (<em>dlload</em>, <em>dlclose</em>, <em>dlsym</em>). </p><ul id="5c40ac8d-8ee1-4a79-8a09-dc595e8d77b6" class="bulleted-list"><li style="list-style-type:disc">Jeśli jakiś podprogram nie jest używany to nigdy nie jest wczytywany do pamięci.</li></ul><ul id="f22b10c8-a765-4f84-9d8f-eebae3c3394d" class="bulleted-list"><li style="list-style-type:disc">Rozmiar programu może być większy niż rozmiar pamięci operacyjnej.</li></ul><ul id="10b9977f-4e8a-44e2-a11c-c5ac0195357f" class="bulleted-list"><li style="list-style-type:disc">Moduły wspólne są przechowywane w tylko jednym egzemplarzu na dysku </li></ul><h3 id="1fe76f70-b450-4f56-a62a-e409406b54ac" class="">Łączenie dynamiczne </h3><p id="1ca05203-0f6a-4973-adce-aef4d7044ff4" class="">W takim modelu moduł ładowalny zawiera jedynie informacje o tym jakie moduły są potrzebne do wykonania, a odpowiedzialność załadowania wymaganych modułów spada na system operacyjny. Taki model najczęściej dotyczy modułów bibliotecznych. </p><p id="20badad9-4071-48e3-a1fd-6747d1bcc1f7" class="">W kodzie zamiast odwołań do faktycznych funkcji używa się <strong>namiastek procedur</strong>. Taka namiastka wie gdzie jest biblioteka z implementacją i jak ją załądować</p><ul id="06a8d7de-08d2-440d-893e-28fa45bec5cc" class="bulleted-list"><li style="list-style-type:disc">Może być wykonywane albo podczas ładowania programu, albo podczas wystąpienia odwołania do danego modułu</li></ul><ul id="b4a07bcd-1943-4290-91ff-69a9b3d38067" class="bulleted-list"><li style="list-style-type:disc">Wymaga wsparcia SO, który sprawdza czy potrzebny moduł jest już załadowany </li></ul><ul id="ef7743b6-ccf4-47a3-b2ad-458632c4818f" class="bulleted-list"><li style="list-style-type:disc">Moduł, który jest wykorzystywany przez wiele aplikacji znajdzie się w pamięci tylko raz - <strong>bilbioteki dzielone</strong></li></ul><p id="48c8d6dc-f863-4b52-a142-59571c6113fe" class="">W efekcie korzystania z tego modelu, orzczędzamy miejsce i na dysku twardym i w pamięci opercyjnej. </p><h1 id="edb82d66-e872-4949-8fbf-5e15f7c80506" class="">Zarządzanie pamięcią</h1><p id="eb67e1ff-6589-45e1-9f35-6e5fbe90b85e" class="">Mamy osobny moduł w systemie opercyjnym, który zarządza pamięcią. Może być wbudowany w jądra albo być osobnym procesem. Główne zadania zarządcy pamięci są następujące: </p><ul id="b179eada-54d4-4792-ada0-93c4f57dd1a1" class="bulleted-list"><li style="list-style-type:disc">Rejestrowanie, które fragmenty pamięci są zajęte, a które wolne.</li></ul><ul id="8dd53912-af9e-4451-b7c2-966fa13ab6c6" class="bulleted-list"><li style="list-style-type:disc">Przydzielanie i odbieranie pamięci procesom.</li></ul><ul id="f128e8fa-93fe-46e4-985f-9e94d98457c6" class="bulleted-list"><li style="list-style-type:disc">Przesyłanie danych między pamięcią opercyjną a pamięcią pomocniczą (dyskiem).</li></ul><ul id="4479a150-ecc2-4305-b194-b41ebe057f21" class="bulleted-list"><li style="list-style-type:disc">Zapewnianie ochrony pamięci.</li></ul><ul id="58a207fd-6fa2-4bda-905c-72a6ccec2b4d" class="bulleted-list"><li style="list-style-type:disc">Umożliwianie współdzielenia kodu między procesami.</li></ul><p id="8b308011-65f3-4ac1-9b96-a12412e5b371" class="">Mówimy o dwóch klas operacji zarządzania pamięcią - <strong>techniki niewirtualne</strong> oraz <strong>techniki wirtualne</strong>.</p><h2 id="907021f4-a7b6-4eca-a29c-c8c0e6380990" class="">Technika - Brak zarządzania pamięcią</h2><p id="851d51bb-9c89-4b68-9a7b-d73e8ff8a9ed" class="">Każdy proces korzysta z pamięci jak chce, bez żadnych restrykcji. 
+<strong>Zalety: </strong></p><ul id="47bc71cb-8ac3-423d-b04c-81915e90e480" class="bulleted-list"><li style="list-style-type:disc">Duża elastyczność dla użytkownika </li></ul><ul id="b4613036-5bab-4f27-b5a7-e5d0ca4d49d1" class="bulleted-list"><li style="list-style-type:disc">Niepotrzebne wsparcie systemowe </li></ul><ul id="67bccc67-5b62-443f-bc3a-c419f9c3af1e" class="bulleted-list"><li style="list-style-type:disc">Niepotrzebne wsparcie systemowe</li></ul><p id="d72a23ec-5e00-4660-92f4-de0937d1e7d6" class=""><strong>Wady: </strong></p><ul id="d9321fb0-8732-4cf4-ae92-e2cc13abebe8" class="bulleted-list"><li style="list-style-type:disc">Brak usług </li></ul><ul id="ea6661bf-fc93-4940-9e66-7f757cfb368a" class="bulleted-list"><li style="list-style-type:disc">Użytkownik musi sam sobie wszystko zaprogramować</li></ul><p id="55799411-4214-44bb-bc31-e164d39d024f" class="">Takie techniki stosuje się w wyspecjalizowanych systemach wbudowanych opartych na mikrokontrolerach. </p><h2 id="25e90198-0728-483f-86a7-c8ec8410beb6" class="">Technika - Pojedyńczy obszar pamięci</h2><p id="10c29a15-19ef-4307-8038-ea326b30240a" class="">Pamięć dzielimy na dwa obszary: obszar dla systemu operacyjnego oraz drugi obszar dla jednej aplikacji użytkownika (pozwalało to na wiązanie adresów na etapie kompilacji, bo porgram był wczytywany zawsze w to samo miejsce w pamięci). </p><p id="90fa6a14-7c1c-4496-9b9d-d98a7b3c850c" class=""><strong>Cechy: </strong></p><ul id="30c4efc6-857d-4462-ac91-dd18026fd2a4" class="bulleted-list"><li style="list-style-type:disc">Bardzo prosty model, zatem małe wymaganie wobec SO.</li></ul><ul id="0b8e50f2-c71c-471f-9ae0-b3e7a7cd3815" class="bulleted-list"><li style="list-style-type:disc">Nierelokowalne programy wynikowe.</li></ul><ul id="31fabca4-5c03-42ec-b6e8-7d928721daad" class="bulleted-list"><li style="list-style-type:disc">Proste ładowanie modułów.</li></ul><ul id="9104a6f3-2920-4d4d-8902-31a16a62c16f" class="bulleted-list"><li style="list-style-type:disc">Minimalna lub brak ochrony pamięci.</li></ul><ul id="d30310cc-1499-46ce-9e7b-214c46ab08a8" class="bulleted-list"><li style="list-style-type:disc">Brak wieloporogramowości.</li></ul><p id="192487de-22b0-45be-9350-4e0278c0d297" class="">Taki model jest wciąż stosowany, w niektórych systemach wbudowanych pomimo swoich znacznych ograniczeń.</p><h2 id="152dd5d3-813b-4774-a465-10c7768a3e30" class="">Technika - Wymiana</h2><p id="97cc9ca1-e29f-4a17-a9e4-c950611434dd" class="">W pamięci operacyjnej znajdują się tylko aktywne procesy, reszta procesów znajduje się w pamięci pomocniczej. Jak jakiś proces przestaje być aktywny (np. kończy mu się kwant czasu) to jest wysyłany do pamięci a w jego miejsce jest wczytywany z dysku proces, który będzie zaraz aktywny. </p><p id="d7f0495c-80ce-434f-9a8b-034af0e232d3" class=""><strong>Cechy: </strong></p><ul id="a1f430e2-62f8-4b00-9d89-d2379e085334" class="bulleted-list"><li style="list-style-type:disc">Wymiana wymaga operacyji wejścia-wyjścia, zatem jest to proces całkiem wolny, czego efektem jest wymóg dłuższego kwantu czasu, aby w czasie jego trwania udało się wprowadzić proces do pamięci operacyjnej. </li></ul><ul id="35bba353-8363-4484-89de-9c78d5f15231" class="bulleted-list"><li style="list-style-type:disc">Obszar wymiany jest przydzielany na dysku w specjaly sposób, aby jaknajbardziej ograniczyć ruchy głowicy. </li></ul><ul id="ac45b3ed-0839-4704-8b7f-47ed12860c69" class="bulleted-list"><li style="list-style-type:disc">SO pamięta jaki jest rozmiar przestrzeni procesu aby przesyłać tylko tyle danych ile trzeba. </li></ul><ul id="209720db-4b5b-4776-85c1-9e9a86513343" class="bulleted-list"><li style="list-style-type:disc">Proces podlegający wymianie musi wrócić w to samo miejsce w pamięci, jeśli nie mamy dynamicznego wiązania adresów. </li></ul><h2 id="8afa4d13-11bf-4825-a3d2-3655b4e1eff7" class="">Technika - Strefy statyczne </h2><p id="9a613c03-df62-4c2f-91e2-1a34f4f774bb" class="">Dzielimy dostępną pamięć opercyjną na pewną ustaloną ilość obszarów. Każdy obszar jest o rozmiarze ustalonym z góry, w każdym obszarze może znajdować się co najwyżej jeden proces. SO pilnuje, które obszary są wolne, a które nie. Jak jakiś proces zgłąsza zapotrzebowanie na pamięć to SO musi znaleść dla niego wolny obszar o odpowiednio dużym obszarze, jak znajdziemy taki obszar to proces go dostaje w całości. </p><p id="02091416-020c-4f05-92c9-199958f1208f" class=""><strong>Strategie przydzielania wolnego obszaru:  </strong></p><ul id="f4e158f1-8a2d-42d1-9ace-a4002c3c345d" class="bulleted-list"><li style="list-style-type:disc">Pierwszy pasujący (<em>first fit</em>) - iterujemy tablicę wolnych obszarów od początku, aż nie znajdziemy wystarczająco dużego. </li></ul><ul id="7894ae7a-9232-4aab-a965-6afa4b8551eb" class="bulleted-list"><li style="list-style-type:disc">Cykliczny pierwszy pasujący - tak samo jak wyżej, jednak zaczynamy wyszukwianie od ostatnio przydzielonego obszaru. </li></ul><ul id="97d8b2a8-d6f6-413c-a807-5237c288e8e1" class="bulleted-list"><li style="list-style-type:disc">Najlepiej pasujący (<em>best fit</em>) - szuka się najmniejszego wystarczająco dużego obszaru.  </li></ul><p id="1dd2402d-7f9a-4a84-9188-0e5b163788d9" class="">Zaletą takiego podejścia jest jego prostota, zaś wadami - przedewszystkim ograniczamy wieloporogramość przez ilość sfer w pamięci. Ponadto zachodzi <strong>fragmentacja wewnętrzna </strong>- mianowicie nie cała pamięć przydzielona procesowi jest wykorzystana, więc każdy proces ma jakiś kawałek nie wykorzystanej pamięci, łącznie prowadzi to do sytuacji, że jest dużo wolnych kawałków ale nic nie można z nimi zrobić. </p><h2 id="b176fce7-0e18-41ab-b9d4-3a677a9a4ce0" class="">Technika - Przydział ciągły pamięci</h2><p id="4484933f-55de-49ca-80d2-b1e9fd5416df" class="">Dalej przydzielamy procesom ciągłe bloki pamięci ale podział nie jest ustalony z góry. Jak SO się uruchomi to w pamięci jest jeden wielki wolny obszar - <strong>dziura</strong>. Jak jakiś proces żąda pamięci, to wycinamy tyle pamięci ile chce i mu dajemy, dziura się zmiejsza i tak dalej. Jak widać zjawisko fragmentacji wewnętrznej nie ma tu mejsca bo każdy proces dostaje dokładnie tyle pamięci ile potrzebuje. 
+W tym modelu zachodzi inny problem, mianowicie:<strong> </strong>po jakimś czasie działania pamięć ma dużo dziur w różnych rozmiarach, wtedy wybieranie i przydzielanie wolnego bloku i ciągłego bloku pamięci jest bardziej złożone. SO zatem, musi mieć listę wszystkich wolnych obszarów. </p><p id="094cf7d0-340a-4ef7-8656-58de9fa4216c" class=""><strong>Strategia wyboru wolnego obszaru: </strong></p><ul id="b09826d8-13fd-4dec-af93-dec53872d113" class="bulleted-list"><li style="list-style-type:disc">Pierwsza pasująca - poszukiwanie od początku lub cyklicznie</li></ul><ul id="0b68beea-68d3-4169-87a6-0710b88593ad" class="bulleted-list"><li style="list-style-type:disc">Najlepiej pasująca - szukamy najmniejszą pasująca dziurę </li></ul><ul id="94aba3fc-0858-45c1-8914-87a05109b189" class="bulleted-list"><li style="list-style-type:disc">Najgorzej pasująca - dajemy największą dostępną dziurę, mamy nadzieje, że to co zostanie będzie wystarczające, żeby dać innym procesom. </li></ul><p id="11ce3013-7bbc-4eb5-b0d1-774d2aadefe9" class="">W pratykce okazuje się, że przydzielanie najgorzej pasującej dziury jest najgorszym pomysłem, a pozostałe dwa są porównywalne pod względem zarządzania pamięcią, lecz przydział pierwszej pasującej jest szybszy. </p><p id="83efa5bf-cc0a-444d-a8bd-e9d46fec57b5" class="">W efekcie tej techniki, po pewnym czasie działania, może nam zostać bardzo dużo małych dziur - wtedy zachodzi <strong>fragmentacja zewnętrzna</strong>. Suma obszarów wolnych jest duża ale nie jest to ciągły blok pamięci, więc nie możemy nikomu jej przyznać. Aby naprawić ten problem, można odpalić defragmentacje, czyli poprzestawianie tych obszarów aby była duża dziura, lecz jest to kosztowne i nie można jej wykonać jeśli jakiś proces jest nierelokowalny. </p><h2 id="3e323478-fc28-4db1-831e-7be8285472e2" class="">Technika - Algorytm bliźniaków (<em>Buddy Alg.</em>)</h2><p id="e666aa02-f89a-4479-a05c-f7ad903608f1" class="">Technika stosowana do dziś w jądrze linuxa, sotosowna dla struktur systemowych. Model działa przy założeniu, że każdy proces będzie żądał bloki rozmiaru <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi><mo>⋅</mo><msup><mn>2</mn><mi>k</mi></msup></mrow><annotation encoding="application/x-tex">B \cdot 2^k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.849108em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.849108em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span>, dla <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi></mrow><annotation encoding="application/x-tex">B</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span></span></span></span></span><span>﻿</span></span> będącego ustalonym rozmiarem bloku.  </p><p id="17402a7a-e5ea-4522-b9a1-7b6edab0b2db" class="">Ilość bloków w pamięci również jest liczbą <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mi>m</mi></msup></mrow><annotation encoding="application/x-tex">2^m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.664392em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">m</span></span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span>, dzięki temu, każdy ciągły blok pamięci, można oznaczyć dwoma liczbami <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mi>a</mi><mo separator="true">,</mo><mi>b</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(a,b)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal">a</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal">b</span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span>, oznacza to blok rozmiaru <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi><mo>⋅</mo><msup><mn>2</mn><mrow><mi>b</mi><mo>−</mo><mi>a</mi></mrow></msup></mrow><annotation encoding="application/x-tex">B \cdot 2^{b-a}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8491079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">b</span><span class="mbin mtight">−</span><span class="mord mathnormal mtight">a</span></span></span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> zaczynający się w bloku o indeksie <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">a</span></span></span></span></span><span>﻿</span></span>. Algorytm polega na dzieleniu bloków na <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn></mrow><annotation encoding="application/x-tex">2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span></span><span>﻿</span></span>, aż nie dostaniemy bloku o pasującym rozmiarze.  </p><p id="9e64954a-25fe-4d03-9d98-e66889e76c8c" class="">Podczas dealokacji, mergujemy bloki, jak oba są wolne.</p><p id="0e6cac14-8cec-4abf-a17f-3a46f978a249" class=""><a href="https://en.wikipedia.org/wiki/Buddy_memory_allocation">https://en.wikipedia.org/wiki/Buddy_memory_allocation</a></p></div></article></body></html>

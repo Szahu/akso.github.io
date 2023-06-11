@@ -1,0 +1,674 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>1. Podstawy </title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-interactiveBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="1b3ed5af-9866-42d4-b32c-cb22aaf59356" class="page sans"><header><h1 class="page-title">1. Podstawy </h1><p class="page-description"></p></header><div class="page-body"><h1 id="3779d1a8-c3bd-476e-abbd-8beaf85a4d2b" class="">Zadania systemu operacyjnego </h1><ul id="280b909d-8c8e-4679-95ab-d515f71322ba" class="bulleted-list"><li style="list-style-type:disc">Definiowanie interfejsu użytkownika </li></ul><ul id="e9ae794d-621e-43a5-8fde-65464dfe75f0" class="bulleted-list"><li style="list-style-type:disc">Udostępnianie systemu plików</li></ul><ul id="51d97345-d95b-4cdf-80bc-1f99c25c19ef" class="bulleted-list"><li style="list-style-type:disc">Udostępnianie środowiska do wykonywania programów</li></ul><ul id="52cbad52-98bb-477d-966d-cde793db122b" class="bulleted-list"><li style="list-style-type:disc">Sterowanie urządzeniami wejścia-wyjścia</li></ul><ul id="209d34e3-5764-4d6c-9e39-acf303210488" class="bulleted-list"><li style="list-style-type:disc">Obsługa podstawowej klasy błędów</li></ul><h2 id="4b330075-69de-4bff-b468-d401d2abbd4c" class="">Zarządzanie zasobami systemu komputerowego </h2><ul id="e1a10c5e-0870-4fba-96b1-b13fe217243d" class="bulleted-list"><li style="list-style-type:disc">Przydział zasobów</li></ul><ul id="0019922e-0a23-43f4-a088-09f64dd0a317" class="bulleted-list"><li style="list-style-type:disc">Planowanie dostępu do zasobów</li></ul><ul id="65a87de7-7f81-4a57-bc3c-35f3d04cb943" class="bulleted-list"><li style="list-style-type:disc">Ochrona i autoryzacja dostępu do zasobów</li></ul><ul id="50f2bcea-ea5a-4f5b-a24e-906df076b0dc" class="bulleted-list"><li style="list-style-type:disc">Odzyskiwanie zasobów</li></ul><ul id="a8e2cdc7-ad0a-4cb4-878f-ea0b6340734c" class="bulleted-list"><li style="list-style-type:disc">Rozliczanie - gromadzenie danych o wykorzystywaniu zasobów</li></ul><h3 id="d667c104-6fea-4cfc-a88a-baf525f0afe9" class="">Procesor i pamięć</h3><p id="aee4c8a7-bf4c-4af9-b61a-3da74980d1f8" class="">System operacyjny musi zarządzać zasboami aby wszystkie procesy mogły sprawiedliwe i szybko się wykonywać, bez straty czasu. Musi się też upewnić, że preocesy mają prawo do korzystania z zasobów. </p><p id="dd9631ca-f182-4407-a525-763d1559c039" class="">Standardowymi zasobami jest <strong>procesor </strong>i <strong>pamięć</strong>. </p><p id="b4901a94-c0c8-4473-9f5e-cac5f86d18f5" class="">System operacyjny musi przydzialać procesom czas procesora tak aby każdy miał tyle ile potrzeba, było sprawiedliwe i nie dochodziło do zakleszczenia ani zagłodzenia. Tak samo z pamięcią. </p><p id="3164ec4f-8132-4f94-9db5-a6bee72aa7db" class="">Odnośnie pamięci - SO musi kontrolować zajętość i dostępność przestrzeni adresowej, oraz przydzielać odpowiednie fragmenty wolnej pamięci na rządanie aplikacji. System musi również zadbać o to, aby aplikacji nie mogły uzyskać dostępu do nie swojej pamięci. </p><p id="7b8db231-329e-4d88-837d-e9279230907d" class="">SO pośredniczy również w konwertowaniu adresów wirtulanych na fizyczne w systemach z segmentowaniem lub stronicowaniem przy użyciu tablicy segmentów lub strong oraz obsługę błędu strony. </p><h3 id="f3a5ee5a-7f41-4a7a-8076-5073db9ef1f0" class="">Urządzenia wejścia-wyjścia</h3><ul id="f68091ad-a0e1-4ad9-abf7-66dc949560e7" class="bulleted-list"><li style="list-style-type:disc">udostępnianie i sterowanie urządzeniami pamięci masowej</li></ul><ul id="b0b38eec-a2b8-413e-a5d4-c6ae987c3075" class="bulleted-list"><li style="list-style-type:disc">alokacja przestrzeni dyskowej </li></ul><ul id="debbf4f1-18c5-4353-b05b-29a55721f6b2" class="bulleted-list"><li style="list-style-type:disc">udostępnianie i sterowanie drukarkaim, skanerami, klawiaturami, itp.</li></ul><ul id="68a18185-013f-4e6c-8c05-13938f1ad101" class="bulleted-list"><li style="list-style-type:disc">System plików<ul id="21a5af7e-f1f5-488b-b461-38dcbf993b8e" class="bulleted-list"><li style="list-style-type:circle">organizacja i udostępnianie informacji </li></ul><ul id="338a353d-b731-47f3-9337-1f3d27a27eb5" class="bulleted-list"><li style="list-style-type:circle">ochrona i autoryzacja dostępu do informacji </li></ul></li></ul><p id="847f89d1-697d-45f5-bcd6-f977d418e0b7" class="">Urządzenia wyjścia-wyjścia mogą być bardzo wolne, dlatego SO musi sprytnie nimi zarządzać przy użyciu bufforowania, przerwań lub innych taktyk. </p><p id="349190b3-e231-4d06-95e6-e767eb3c7b74" class="">Ponadto, ważnym zadaniem jest również zarządzanie informacją, danymi w pamięci stałej. W skład tych zadań wchodzi organizacja gromadzenia i udostępniania danych, ochrona danych przed nieupoważnionym dostępem, oraz zachowanie danych w przypadku awarii lub innych nieprzewidzianych sytuacji. </p><h1 id="9baaf090-78d1-4625-8d1c-58296561b908" class="">Klasyfikacja Systemów Operacyjnych </h1><p id="dfc3e508-e0a2-4ae3-807f-25d10c21faa3" class="">Systemy można poklasyfikować na kilka sposbów:</p><ul id="ea9ef178-b64f-48e7-ac0a-9e3339865eaa" class="bulleted-list"><li style="list-style-type:disc">Ze względu na liczbę wykonywanych programów jednocześnie<ul id="d0b4e4fb-edff-44aa-947e-cbfc7247b937" class="bulleted-list"><li style="list-style-type:circle">System jednozadaniowy musi poczekać z wykonaniem kolejnego zadania aż skończy robić to co robi w danej chwili</li></ul><ul id="ee8e9cf1-31ff-4273-b0a5-6826ed6745f6" class="bulleted-list"><li style="list-style-type:circle">Systemy wielozadaniowe mogą mieć wiele procesów działających jednocześnie, którym zgodnie z jakimś algorytmem jest przydzielany czas procesora. Takie systemy muszą mieć operacje przełączania kontekstu, która zachowuje stan procesu, który chwilowo przerywamy aby zająć się czymś innym. Przełączenie kontekstu może nastąpić ze względu na: żądania przydziału dodatkowe zasobu, zainicjowanie operacji wejścia-wyjścia, wykorzystanie swojego kwantu czasu procesora albo inne zadanie o wyższym priorytecie zgłasza gotowość do działania. </li></ul></li></ul><ul id="a709f71b-ddec-45cc-b070-2dfbdd07d605" class="bulleted-list"><li style="list-style-type:disc">Ze względu na liczbę urzytkowników:<ul id="d4ed73da-e37d-498a-9915-35a9da582f88" class="bulleted-list"><li style="list-style-type:circle">Systemy dla jednego użytkownika: systemu używa tylko jeden użytkownik, więc może on korzystać ze wszystkich zasobów do woli, nie potrzebna jest autoryzacja ani zaawansowana ochrona informacji.</li></ul><ul id="c916aeaf-0b65-4aed-8c6e-95178ae396ac" class="bulleted-list"><li style="list-style-type:circle">System dla wielu użytkowników: tutaj SO musi zapewnić, że każdy ma sprawdieliwy dostęp do zasobów, oraz każdego informacje są bezpieczne przed innymi użytkownikami. </li></ul></li></ul><p id="3f9ba98b-ef04-45bd-be3f-ffe0b6e69dd6" class="">Inne rodzaje systeów: </p><ul id="55ee56db-44b0-4c6b-b70b-993d3ff92697" class="bulleted-list"><li style="list-style-type:disc">System czasu rzeczywistego: zorientowane na zakończenie przetwerzania przed danym deadlinem (jak najszybciej) </li></ul><ul id="7a54094d-aaac-465c-8402-258ca435500b" class="bulleted-list"><li style="list-style-type:disc">Systemy sieciowe i rozproszone: zarządzenie zbiorem jednostek, które nie wspódzielą zasobów fizycznych.</li></ul><ul id="40616df3-e224-4ca1-912b-084d551f306b" class="bulleted-list"><li style="list-style-type:disc">Systemy operacyjne komputerów naręcznych: robione dla urządzeń z ograniczonymi zasobami jak telefony, smartwatcha itp. </li></ul><h1 id="c240e421-9670-4362-9f72-c753119bf922" class="">Zasada działania systemu operacyjnego</h1><p id="7929a2f6-3cb8-4e57-a537-4a0b0f10df8a" class="">Kod proramu oraz dane do jego wykonania znajdują się w pamięci operacyjnej. </p><p id="c84023be-2fdc-4c3c-a171-b8dbffff56e2" class="">SO ma PC (program counter) lub IP (instructin pointer), który wskazuje na kolejną intrukcje do wykonania. Komputer wczytuje kolejny rozkaz z pamięci i odpowiednio zwiększa PC albo IP. Zatem kolejność wykonywanych rozkazów jest dyktowana ich ustawieniem w pamięci, oczywiście program może modyfikować PC albo IP instrukcjami skoku. </p></div></article></body></html>

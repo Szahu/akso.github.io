@@ -1,0 +1,679 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>2. Procesy, Przerwania </title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-interactiveBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="b976a626-aad7-46fe-b60b-ca642e1562ee" class="page sans"><header><h1 class="page-title">2. Procesy, Przerwania </h1><p class="page-description"></p></header><div class="page-body"><h1 id="7e86d85c-5493-45a1-a5b9-4ebcd9de708d" class="">Kluczowe zagadnienia:</h1><ul id="7d28e816-cd93-4292-9e71-ae48d8d1b0c5" class="bulleted-list"><li style="list-style-type:disc">Rozumienie podziału czasu i działania różnych algorytmów (oraz co jest w Linuxie i MINIXIE)</li></ul><ul id="139371c7-d03f-4e1b-a568-ae99271b2926" class="bulleted-list"><li style="list-style-type:disc">Dlaczego się stosuje podział czasu i jakie to powoduje problemy</li></ul><ul id="adb71e9a-f3d9-4a1f-8ee5-e4471f8945fc" class="bulleted-list"><li style="list-style-type:disc">Jakie jest wsparcie sprzętowe i dlaczego jest potrzebne (przełączanie kontekstu) </li></ul><h1 id="a173037e-d041-4eb0-8102-5ab8431e01f3" class="">Pojęcie procesu </h1><p id="55837ed6-6a84-4c6c-bd8e-097c53dd4a34" class="">Proces jest wykonaniem programu, jest to obiekt aktywny, który w czasie podejmuje jakieś zadania, w przeciwieństwie do obiektów stałych jak pamięci. </p><p id="53fb2769-13b8-412f-8aa6-62e692a8f358" class="">Do procesu należy kilka składowych, każdy proces ma przydzieloną pamięć, z której może korzystać. Pamięta też pewien zbiór rejestrów. </p><p id="1fb295c4-ab9b-41bd-985f-daecca2ba0c3" class="">Proces może też zawierać inne potrzebne zasoby do wykonania programu. np deskryptor otwartego pliku. </p><p id="df935cb8-31d6-48f8-950a-ba33b2948e95" class="">Do pojęcia procesu należą również pewne infomacje administracyjne potrzebne dla zewnętrznych programów, takie jak stan procesu lub kod zakończenia. </p><h3 id="9c351fe2-4277-4523-b779-871167952dcb" class="">Przestrzeń adresowa procesu</h3><p id="b7466038-bdd5-4033-84fb-91ed53827c03" class="">Przestrzeń adresowa procesu zawiera kod programu (text section), dane (data section) oraz stos procesu (stack section). </p><p id="b7866a54-a3b2-49b4-a8bb-c5fdab4205af" class="">Przestrzeń adresowa procesu jest liczona od zera, są to adresy logiczne a nie fizyczne. Aby uzyskać adres fizyczny z logicznego musi nastąpić tranlacja, aby otrzymać adres fizyczny (jest to robione <strong>sprzętowo</strong>). </p><p id="37eef813-02bc-4d9b-84cb-fc3477c50f29" class="">Przestrzeń adresowa procesu nie musi cała być w pamięci operacyjnej, wystarczy, że będzie sprowadzana na rządanie (pamięć wirtualna). </p><h3 id="d83ebbdc-e703-4da8-ab35-e7ac56a8953c" class="">Zbiór rejestrów</h3><p id="2e0ee242-b919-413c-8ee9-de74f6aea471" class="">W systemach gdzie wiele procesów jest wykonywanych jednocześnie, używa się przerwań i przełączenia kontekstu aby zmieniać wykonywany w danej chwili proces. W takim razie aby SO mógł odtworzyć stan procesu, który przerywa na rzecz czegoś innego, musi dla niego zapamiętać, wartości w rejestrach, których używa proces żeby potem można było wrócić do pracy. </p><h3 id="2ca981a8-f82d-4a70-acdd-5f7a460b708d" class="">Inne elementy</h3><p id="f832e0db-dcde-4cf2-aca3-093f0a3e44c7" class="">Innymi składowymi procesów mogą być na przykład informacje o otwartych plikach, stosy alternatywne, informacje o urządzeniach wejścia-wyjścia itp. </p><h2 id="b399e7c7-76ab-463f-a7a9-9c6a487c7580" class="">Tablica Procesów, PCB</h2><p id="4d6aba28-ad08-40a5-a54f-c0db28cd7c4b" class="">Informacje o procesach są przechowywane w tablicy procesów (nie musi to być dosłowny C-array). Każdy element tablicy przechowuje dane o jednym procesie, nazywa się to blok kontrolny procesu - PCB (<em>Process Control Block</em>). PCB przechowuje wszystkie informacje o procesie po za jego przestrzenią adresową. </p><p id="a9d6318a-8f2e-4a88-b8a0-e16a194f0bdb" class="">Informacje w bloku kontrolnym procesu to między innymi: </p><ul id="9b5a75d2-2014-4e40-abef-3525aa165fb6" class="bulleted-list"><li style="list-style-type:disc">Stan procesu</li></ul><ul id="ca03a536-caea-46c0-8114-1c17f7a5e9b8" class="bulleted-list"><li style="list-style-type:disc">Numer procesu (<em>pid</em>)</li></ul><ul id="1f427c9a-6843-45a9-a49a-0d55d9bcc914" class="bulleted-list"><li style="list-style-type:disc">Licznik rozkazów (nie pilnuje faktycznego licznika rozkazów, jest to miejsce na zapamiętanie licznika w przypadku przełączenia kontekstu) </li></ul><ul id="840cf65d-3012-4305-82d1-6ce958b3b0a7" class="bulleted-list"><li style="list-style-type:disc">Rejestry (wartości rejestrów ogólnego przeznaczenia) </li></ul><ul id="82209bc3-4c22-43b9-8ad6-a395fc4c3a8f" class="bulleted-list"><li style="list-style-type:disc">Rejestry zarządzania pamięcią</li></ul><ul id="c6edfb8e-6ec0-4442-a69f-8a84965b4c1e" class="bulleted-list"><li style="list-style-type:disc">Dyskryptory otwartych plików</li></ul><ul id="1f8dc134-4477-4221-a806-241f9d761c7e" class="bulleted-list"><li style="list-style-type:disc">itp… </li></ul><h1 id="4f8aaf36-904d-429c-9810-fdc8678b4719" class="">Podział czasu, wieloprogramowość </h1><p id="812b7ec8-0832-4796-89f7-a1066fa27b6d" class="">W systemach z podziałem czasu, nie wykonujemy procesów jeden po drugim, a każdemu przydzielamy <strong>kwant czasu </strong>i na ten czas proces dostaje do użytku procesor i może wykonywać swój kod. Jak się skończy kwant czasu procesu to jego informacje są zapisywane (PCB) i procesor jest dawany kolejnemu procesowi. Zjawsko zmiany przydziału procesora nosi miano <strong>Przełączania Kontekstu. </strong></p><p id="48057aa7-197f-406c-a54b-ce72b5020512" class="">Nie zawsze proces musi wykorzystać cały swój kwant czasu, na przykład w sytuacji, gdy proces zarząda operacji wejścia-wyjścia nie ma sensu by procesor czekał beczynnie aż urządzenie wejścia-wyjścia skończy działać. W takiej sytuacji wykonywanie procesu jest przerwane, i procesor jest przyznawany innemu procesowi. Jak urządzenie wejścia-wyjścia skończy zarządaną operację, zgłasza to do SO, a ten wtedy wznawia przy kolejnej okazji wcześniej wstrzymany proces. Ta komunikacja między urządzeniami a SO, zachodzi za pomocą <strong>przerwań</strong>. </p><h3 id="97aa2544-058d-471c-b04d-fef301bdb77a" class="">Przełączanie kontekstu, krok-po-kroku</h3><ul id="8c70a33c-eba3-434b-a56a-7e1db8c039a5" class="bulleted-list"><li style="list-style-type:disc">Proces P wykonuje sobie swój kod</li></ul><ul id="11c275ef-5831-4f9f-90d8-73b26dc3132e" class="bulleted-list"><li style="list-style-type:disc">Sprzęt poprzez przerwanie zawiadamia SO, że skończył się kwant czasu procesu (lub nastąpiło wywołanie systemowe), sterowanie zostaje przekazane systemowi operacyjnemu. </li></ul><ul id="19554abe-e349-4430-b942-446023fcaec1" class="bulleted-list"><li style="list-style-type:disc">System operacyjny ma teraz procesor, nastepuje zapisanie danych procesu P w jego bloku kontrolnym, następnie następuje wczytanie informacji procesu Q z jego bloku kontrolnego. </li></ul><ul id="c4bce99c-b331-40e9-9f07-32ebbc3009a9" class="bulleted-list"><li style="list-style-type:disc">Procesor jest przyznawany procesowi Q i zaczyna on wykonywać swój kod.</li></ul><p id="c5ed3183-cb11-4ded-ba39-7b7d676ddfa9" class="">Przełączanie kontekstu może być realizowane w całości przez SO, ale może również być wspomagane sprzętowo, np. w architekturze x86. Jednak najczęściej jest to na poziomie SO, zapewnia to lepszą przenośność (działanie na różnych architekturach) oraz elastyczność. </p><h2 id="68b36776-ef41-4e59-bc8c-86de32023d02" class="">Przerwania</h2><p id="746f9ca7-74bd-4713-a238-9a61f04185a7" class="">Przerwania jak sama nazwa wskazuje przerwyają. Przerwania przerywają wykonywany przez proces kod, aby zasygnalizować jakąs informację systemowi, a ten podejmuje odpowiednie działania. </p><p id="47cfdafc-419b-42da-a6d9-892a42d35452" class="">Przerwania mogą być generowane przez urządzenia wejścia-wyjścia, na przykład, żeby zasygnalizować zakończenie wcześniej zamówionej operacji. Jest to zdarzenie <strong>asychroniczne</strong>, czyli są nieprzewidywalne z punktu widzenia procesora. 
+Przerwanie może być również wystosunkowane przez wykonywane program (pułapki, wyjątki), są to zdarzenia <strong>synchroniczne</strong>.</p><p id="ab409aa4-fbc6-41f3-9df0-b393f7b29841" class="">Po każdym wykonanym cyklu rozkazowym, procesor sprawdza czy nikt nie wysłał przerwania, jeśli przerwanie jest wykryte, SO zapisuje informacje, potrzebne aby potem wrócić do tego co się robiło przed przerwaniem, i wykonuje procedurę obsługi przerwania. 
+Po obłsużeniu przerwania, SO wczytuje wcześniej odłożony na stos adres powrotu i ładuje go do licznika rozkazów, tym samym kontynując przerwaną prace.  </p><h3 id="ef9ddc63-21ff-410c-a750-4e42af4194f3" class="">Wektor przerwań</h3><p id="8e33bb83-0b14-4e53-b96e-9f8fe0b7443c" class="">Typów przerwań jest wiele, dlatego dla i-tego przerwania, w tablicy przerwań na i-tej pozycji jest adres kodu, który służy do obsłużenia tego przerwania. 
+Ta tablica może również zawierać dodatkowe informacje o obsłudze przerwania, takie jak poziom ochrony.  </p><p id="96067d27-8379-4317-a70d-6522fac19c9c" class="">Za konfigurację tej tablicy odpowiada programista systemu operacyjnego. </p><h3 id="42d298f8-274d-4c7e-a36f-c55e3524a998" class="">Operacje wejścia-wyjścia</h3><p id="e7a586e5-937a-48c5-88c5-115b3d28a143" class="">Gdy proces zgłasza chęć użycia urządzenia wejścia-wyjście, robi to poprzez <em>systemcall</em>, czyli przerwanie programowe. Wtedy kontrole przejmuje SO, i dla procesu zleca zamówioną operację do <strong>DMA (Direct Memory Access)</strong>, jest to osobne urządzenie od procesora. Czyli SO mówie DMA skąd, dokąd i ile danych ma przesłać, a DMA zajmuję się resztą. </p><p id="7c591b4a-00cd-4bad-932a-1a4f18ce192a" class="">DMA wykonuje zleconą operacje <strong>bez udziału procesora</strong>, sprowadzając dane bezpośrednio do pamięci. Jak skończy prace to wysyła przerwanie do procesora, aby ten wiedział, że operacja wejścia-wyjścia została zakończona. </p><h1 id="b2618b63-042a-4b07-89ae-57f221781344" class="">Stany Procesów</h1><p id="d85f60fa-af9f-4037-9700-570aab4e1baf" class="">Każdy proces może mieć następujące stany: </p><ul id="fa9e401d-6c24-4df9-8ddf-eb8f15aff6e6" class="bulleted-list"><li style="list-style-type:disc">Nowy: przyznawany właśnie stworzonym procesom.</li></ul><ul id="02562919-bec2-45c6-840f-4e15c89da213" class="bulleted-list"><li style="list-style-type:disc">Gotowy: proces ma wszystkie zasoby potrzebne do działania, czeka tylko na pozwolenie na start. </li></ul><ul id="f70d224d-2450-4678-b7d9-d081ea887b84" class="bulleted-list"><li style="list-style-type:disc">Aktywny: proces jest aktualnie wykonywny </li></ul><ul id="3e03b7c9-3f4c-4530-9db4-7c05299e76db" class="bulleted-list"><li style="list-style-type:disc">Wstrzymany: proces czeka na jakiś zasób (np. operacje wejścia-wyjścia) </li></ul><ul id="d0ddfa9e-b109-4ac5-bc70-7dcb86a00a97" class="bulleted-list"><li style="list-style-type:disc">Zakończony: proces zakończył działanie.</li></ul><figure id="297c3e20-0b08-486a-bd00-28a63511e3cb" class="image"><a href="2%20Procesy,%20Przerwania%20b976a626aad746feb60bca642e1562ee/Untitled.png"><img style="width:432px" src="2%20Procesy,%20Przerwania%20b976a626aad746feb60bca642e1562ee/Untitled.png"/></a></figure><p id="f5828ccd-504c-47b7-aa24-58738f8531ad" class="">Procesy w zależności od stanu są ustwiane w różnych kolejkach, procesy gotowe są w jednej kolecje, procesy czekające na dysk w innej, itp. </p><h1 id="8dbe697e-37a1-44ae-965e-42eadeac015b" class="">Ochrona</h1><p id="e0566fe8-97f5-49df-85f5-cc7445729116" class="">Zasoby systemu operacyjnego i danych procesów muszą być chronione przed innymi procesami. Jest kilka poziomów ochrony w architekturze x86: </p><ul id="0aa16e2c-1f1f-49c1-960b-9dd172c1315d" class="bulleted-list"><li style="list-style-type:disc">Poziom 0 - wykonywanie funkcji jądra systemu operacyjnego </li></ul><ul id="9a4f19e2-be11-4343-ac10-5d6cdaadd962" class="bulleted-list"><li style="list-style-type:disc">Poziom 1 - wykonywanie funkcji systemu operacyjnego </li></ul><ul id="32de1528-823a-4f9f-9a22-5136609bef6f" class="bulleted-list"><li style="list-style-type:disc">Poziom 2 - Rozszerzenia</li></ul><ul id="77495605-43b1-434d-a9a6-29ad7eebb99f" class="bulleted-list"><li style="list-style-type:disc">Poziom 3 - wykonywanie kodu aplikacji </li></ul><p id="629cb1f8-7cd5-40b3-b03a-809861a2878c" class="">Ochrona wymaga wsparcia sprzętowego. </p><h3 id="ee3b3c59-6d19-4727-8e17-0a5145aba03a" class="">Tryb użytkownika i tryb uprzywilejowany </h3><p id="c797a131-faa0-4415-9765-43a543bf7d73" class="">System operacyjny ma dwa tryby pracy, tryb użytkownika oraz tryb uprzywilejowany. Ten pierwszy jest przeznaczony dla zwykłych procesów / aplikacji, a ten drugi dla operacji jądra. </p><p id="2b020f87-94d4-4c17-8586-009d75e614f7" class="">System opercayjny zaczyna pracę w trybie uprzywilejowanym, i następnie uruchamia procesy w trybie użytkownika. Oczywiście z trybu uprzywilejowanego można przełączyć się w tryb użytkownika, ale w drugą stronę już nie. </p><p id="f1216f01-5300-44a8-a443-916fb71cb4a7" class="">Przejście z trybu użytkownika do trybu uprzywilejowanego następuje poprzez przerwania. 
+W wektorze przerwań znajdują się flagi, który dyktują czy przerwanie ma być obsłużone w trybie uprzywilejowanym czy nie. 
+Na przykład: jak proces wykorzystał swój kwant czasu to przychodzi z zegara przerwanie, które ma być obsłużone w trybie uprzywilejowanym, i wtedy SO może obsłużyć przełączenie kontekstu i znów wejść w tryb użytkownika przy odpalaniu następnego procesu. </p><p id="cf864c69-5830-4dae-b9a3-c3a2cc4ea945" class="">Kolejnym skutkiem takiego rozwiązania jest ochrona pamięci, w trybie użytkownika dostęp jest tylko do pewnego zakresu pamięci, zaś w trybie uprzywilejowanym dostęp jest nieograniczony. </p></div></article></body></html>
