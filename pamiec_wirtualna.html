@@ -1,0 +1,683 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>6. Pamięć wirtualna</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-interactiveBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2400bc97-3c69-496a-bb8d-a627e2fb38bf" class="page sans"><header><h1 class="page-title">6. Pamięć wirtualna</h1><p class="page-description"></p></header><div class="page-body"><p id="11625004-aeca-4f9b-a6d8-aecc5fc4d1a9" class="">Niewszyskie strony wykonywanego aktualnie procesu muszą znajdować się w pamięci, wystarczy, że mamy załadowane strony z kodem wykonywalnym oraz z danymi, których aktualnie używa procesor. Część stron, które nie są potrzebne w danym momencie może przebywać w pamięci pomocniczej (na dysku). </p><p id="94c2e40e-b615-468b-8559-277d6ba9de51" class="">Wprowadzamy technikę <strong>pamięci writualnej</strong>, czyli taktykę, gdzie wczytujemy potrzebne strony dopiero w momencie gdy są nam potrzebne. 
+Umożliwia to przedewszystkim wykonywanie procesów, które nie mieszczą się w całości w pamięci fizycznej, co więcej nie musimy od razu ładować całego programu, co za tym idzie jest krótszy czas uruchamiania. </p><p id="2e7a39bd-ce13-441c-9c19-8612c0705823" class="">Pamięć wirtualna z punktu widzenia użytkownika lub programisty powoduje iluzję olbrzymiej, jednorodnej pamięci. Warto zwrócić uwagę, że implementacja pamięci writualnej może być realizowana jako naturalne rozszerzenie stronicowania. </p><h1 id="fede5542-9a99-4857-aba8-a4842587423b" class="">Stronicowane na żądanie </h1><p id="0750b3d7-940f-4d7a-b13d-b87e101bdfd5" class="">W tablicy stron będziemy przechowywać dodatkową informacje: albo mapowanie na ramke, albo mapowanie na dysk. O tym, czego mapowanie dotyczy w tablicy mówi nam bit poprawności odwołania. </p><p id="9c2fd6da-7e9e-46dc-9220-36de51d1b273" class="">Jak bit poprawności odwołania się świeci to znaczy, że strona jest wczyta do pamięci operacyjnej i mapowanie jest na numer ramki w pamięci fizycznej. </p><p id="f2241a39-c189-4a5d-9fb1-dd0d1eadf1f0" class="">Jak bit poprawności odwołania jest zgaszony, to znaczy, że strona znajduje się w pamięci pomocniczej bądź nie należy do logicznej przestrzeni adresowej procesu. </p><h2 id="57d08a01-647c-4772-8f9e-c0f7fcc41246" class="">Wczytywanie stron do pamięci operacyjnej </h2><p id="b7a7b5ef-b42d-473f-99dd-77f9c7b45353" class="">Jak strona jest wczytana do pamięci i bit poprawności odwołania się świeci to już wiemy co dalej się dzieje, jednak jak strony nie ma w pamięci fizycznej to trzeba ją wczytać. Zaznaczmy, że ten proces jest przezroczysty dla użytkownika, rozważmy krok po kroku jak wygląda ta operacja: </p><ol type="1" id="86c1bfef-2573-4641-b2f4-fce7b0769907" class="numbered-list" start="1"><li>Następuje odwołanie do strony, która nie jest w pamięci operacyjnej.</li></ol><ol type="1" id="7e806bf0-5a5b-42fd-bbca-0ad733eedd3b" class="numbered-list" start="2"><li><strong>Sprzęt</strong> stronicujący (MMU) wykrywa nieustawiony bit poprawności odowłania i generuje<strong> błąd braku strony</strong> - zgłasza przerwanie.</li></ol><ol type="1" id="2a0d5837-9f12-43f7-98fd-f839249e02c7" class="numbered-list" start="3"><li>System operacyjny obsługuje błąd braku strony:<ol type="a" id="e0154131-f449-4bcd-850d-baa09575d38c" class="numbered-list" start="1"><li>Sprawdza czy odwołanie było dozwolone (ochrona pamięci). </li></ol><ol type="a" id="23baa5c7-701c-4c6a-966b-90a7687f77ff" class="numbered-list" start="2"><li>Znajduje wolną ramkę do alokacji strony.</li></ol><ol type="a" id="eb61806c-3aab-4123-8e5c-da8bf3d5db35" class="numbered-list" start="3"><li>Zleca sprowadzenie strony z dysku (pamiętajmy, że to się odbywa sprzętowo DMA).</li></ol><ol type="a" id="2b2ae924-3da2-4ef8-9612-48e3c27facbe" class="numbered-list" start="4"><li>Następuje przełączenie kontekstu - w między czasie ktoś inny niech sobie popracuje</li></ol></li></ol><ol type="1" id="9d78f854-84d3-4294-bddb-7bb8e2538560" class="numbered-list" start="4"><li>Jak zlecona operacja wejścia-wyjścia się zakończy to SO modyfikuje tablicę stron a procesor wznawia wykonanie przerwanego rozkazu.  </li></ol><p id="a955b760-52e2-4709-adb0-bb2051bdda76" class="">Uwaga odnośnie częstotliwości tego zjawiska: wiemy już, że programy raczej korzystają z pamięci dosyć lokalnie, więc tych błędów odwołania nie powinno być tak dużo. Co więcej, jak </p><h1 id="1ca7c0de-69d9-45fd-a2ec-3e324e34e8e3" class="">Zastępowanie stron </h1><p id="ade4242c-b682-412b-993a-74b963f84710" class="">Co się dzieje jak nastepuje błąd braku strony ale nie ma wolnej ramki, do której tę stronę można by wczytać? Trzeba wybrać jakąś ramkę do usunięcia z pamięci operacyjnej i zapisanie na dysku aby zwolnić miejsce, rozważmy zatem kilka algorytmów wyboru takiej ramki do usunięcia. 
+Zapisanie usuwanej ramki na dysk ma miejsce tylko w sytuacji gdy świeci się <strong>bit modyfikacji</strong>, co oznacza, że ramka była modyfikowana od chwili sprowadzenia do pamięci, jak nie ma tam żadnych nowych informacji no to nie ma potrzebny, żeby ją dodatkowo zapisywać. </p><p id="10738b11-c63c-4494-a7c0-069faa12ea44" class="">Algorytm zastępowania strona ma na celu minimalizację liczby błędów strony.</p><p id="8764f241-4db7-4d9c-bd97-36d6f90a709d" class="">Uwaga: w klasycznym modelu na początku w pamięci nie ma żadnych stron, więc pierwsze kilka stron jest wczytywana siłą rzeczy poprzez błąd braku strony.</p><p id="023318e3-d04a-4928-8a8d-5b4e050c2f41" class=""><strong>Zastępowanie lokalne vs globalne:</strong></p><p id="bbb1f4b3-7f3e-48d1-a1b3-2bc8f8ddcbbb" class="">Strategie zastępowania można podzielić na dwie strategie, na lokalną, czyli taką, gdzie jak jakiś proces zgłosi błąd braku strony i nie ma wolnej ramki, to wybieramy to wyczyszczenia ramkę, która już należy do tego procesu. W zastępowaniu globalnym do usunięcia wybieramy stronę należącą do dowolnego procesu, to podejście charakteryzuje się lepszą przepustowością, większą elastycznością, ale jest tutaj mniejsza przewidywalność czasu wykonania procesu. </p><h2 id="d74c5946-7b12-4974-a629-ffe68ccf19ed" class="">Algorytm FIFO</h2><p id="de211f2b-1488-4eab-a2fc-cb1e447bd3da" class="">Każdej stronie przypisujemy jakiś czas logiczny wprowadzenia jej do pamięci, albo przechowywujemy kolejkę stron przebywających w pamięci. Zawsze wybieramy do usunięcie stronę na początko kolejki, a dodajemy na kolejki koniec. </p><p id="8ba2b0f1-d6b0-4b1e-ad07-8c1c54fd47d0" class="">Co ciekawe, przy tym algorytmie większa ilość dostępnych ramek w pamięci wcale nie oznacza, że błędów braku strony bedzie mniej, może być wręcz przeciwnie. Takie zjawisko nosi miano <strong>Anomialii Belady’ego</strong>.</p><h3 id="1db89efc-7488-4a14-b14f-495bd67cea2c" class="">Optymalny algorytm zastępowania stron</h3><p id="20e9b8e4-ab22-4423-b5ce-2890aee001cd" class="">Taki algorytm nie istnieje, jest czysto teoretyczny i służy do porównywania istniejących algorytmów. Taki algorytm minimalizuje liczbę braków stron, jest wolny od anomalii Belady’ego. 
+Jego główną taktyką jest usuwanie strony, która najdłużej nie będzie używana w przyszłości, no ale tego nie da się oczywiście przewidzieć. </p><h2 id="e05c5f48-847a-4900-bf40-33140cf69b61" class="">Algorytm LRU (<em>Least Recently Used</em>)</h2><p id="0f2be0fd-8bce-44bf-b5c6-e1f37c9fb461" class="">Usuwamy stronę, która nie była używana przez najdłuższy czas. Ten algorytm jest jak najbardziej implementowalny. Rozumowanie jest takie, jak do jakieś strony są ostatnio odwołania to zakładamy, że ze względu na lokalność wykonania dalej te strony będą potrzebne, więc jak jakaś strona dawno nie była używana zakłądamy, że kod już z niej nie będzie korzystał w najbliżjszej przyszłości. </p><p id="97d06c51-7db7-408c-a52f-8028e53f922d" class="">Mankamentem tego algorytmu jest jego kosztowność pamięciowa i czasowa, trzeba pamiętać kiedy były odwołania i przeszukiwać tablicę stron. Sprzęt musiałby aktualizować wartość licznika przy każdym odwołaniu do pamięci, a sam licznik mógłby się szybko przepełnić. Powoduje to wielokrotne spowolnienie czasu odwołania do pamięci. </p><p id="25742459-d4ab-4e6a-a446-11546343f0e8" class="">Zamiast licznika, można użyć stosu, jak nastąpi odwołanie do pamięci to numer danej strony przesuwa się na wierzchołek stosu, a stronę do usunięcia usuwamy z dna stosu. Tutaj jednak pojawiają się te same problemy, trzeba modyfikować stos przy każdym odwołaniu do pamięci, zatem znów mamy znaczne spowolnienie przy każdym odwołaniu. </p><h2 id="68211802-6793-4673-92bf-19f3e86c2dfd" class="">Algorytmy przybliżające LRU</h2><p id="ddd88b01-d72d-4abb-992e-5fe931780a95" class="">W praktyce często implementuje się algorytmu przbliżające LRU, na przykład zamiast licznika korzysta się z <strong>bitu odwołania</strong> do strony. Bit ten jest sprzętowo ustawiany za każdym razem gdy nastąpi odwołanie do strony.</p><p id="6705fef9-b7d8-486a-8807-9c9e227b79eb" class="">Zamiast tylko jednego bitu odwołania, możemy mieć ich kilka i je przesuwać w lewo w regularnych odstępach, aby trzymać informację o liczbie odwołań do strony, podczas ostatniego cyklu. </p><h3 id="b92593ee-cc98-424b-9462-315ffc82416a" class="">Model zbioru roboczego </h3><p id="fde18081-9535-43fc-8623-f4db3a314c6a" class="">Jest to pewien abstrakcyjny model zastępowania ramek. Mianowicie, niech <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">Δ</mi></mrow><annotation encoding="application/x-tex">\Delta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord">Δ</span></span></span></span></span><span>﻿</span></span> będzie pewnym ustalonym parametrem, ustalmy <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>W</mi><msub><mi>S</mi><mi>p</mi></msub></mrow><annotation encoding="application/x-tex">WS_p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.969438em;vertical-align:-0.286108em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">W</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">p</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> procesu <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathnormal">p</span></span></span></span></span><span>﻿</span></span> jako zbiór stron, do których nastąpiło ostatnie <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">Δ</mi></mrow><annotation encoding="application/x-tex">\Delta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord">Δ</span></span></span></span></span><span>﻿</span></span> odwołań. Wtedy możemy ustalić ogólne zapotrzebowanie na ramki dla wszystkich procesów:
+<style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Z</mi><mo>=</mo><msub><mo>∑</mo><mi>p</mi></msub><mi>W</mi><msub><mi>S</mi><mi>p</mi></msub></mrow><annotation encoding="application/x-tex">Z = \sum_p WS_p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">Z</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.185818em;vertical-align:-0.43581800000000004em;"></span><span class="mop"><span class="mop op-symbol small-op" style="position:relative;top:-0.0000050000000000050004em;">∑</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.0016819999999999613em;"><span style="top:-2.40029em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">p</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.43581800000000004em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">W</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">p</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span>. Jak <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Z</mi></mrow><annotation encoding="application/x-tex">Z</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">Z</span></span></span></span></span><span>﻿</span></span> przekroczy liczbę ramek w systemie, no to SO wsztrzymuje jakiś proces i usuwa jego strony z pamięci.</p><p id="84675757-9b23-4d91-a084-df832cc4ca0e" class="">Takie podejście byłoby dosyc niepraktyczne, ale możemy przybliżać zbiór roboczy, na przykład mamy bit odwołania rozciągamy w tablicy stron na 3 bity i co dany okres czasu przesuwamy bit o jeden w lewo. W ten sposób kontrolujemy jak dawno nastąpiło odwołanie do tej strony. </p><h2 id="f0a9573f-a807-4d0c-9fd4-6ca914c218cf" class=""><strong>Algorytm drugiej szansy</strong></h2><p id="f9685adb-ff37-46bb-81e2-c789e47008fc" class="">Stronę do zastąpienia wybiera się za pomocą FIFO, jak bit odwołania danej strony jest zero, no to wybieramy tę stronę, w przeciwnym razie ustawiamy bit odwołania na zero, i powtarzamy proces, tym razem już nie dając drugiej szansy.</p><h2 id="6005645c-d093-4049-a700-423798e28c72" class="">Algorytm WS Clock</h2><p id="b9c8189f-97ac-4098-bfa9-890411991738" class="">Jest to algorytm, który łączy algorytm zbioru roboczego oraz algorytm clock. Mamy zegar logiczny, który odmierza czas, oraz parametr <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi mathvariant="normal">Δ</mi><mi>T</mi></msub></mrow><annotation encoding="application/x-tex">\Delta_T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord">Δ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span>, a w tablicy ramek po za bitami kontrolnymi mamy również pole aby pamiętać czas. </p><p id="47cad62d-365c-4caf-a505-a63f5b95fac7" class="">Teraz po odpaleniu algorytmu wymiany stron iterujemy po tablicy ramek i jak ramka ma zapalony bit odwołania to go zerujemy i ustawiamy pole czasu na aktualny logiczny czas, w ten sposób możemy przyblić kiedy strona była ostatnio potrzebna. 
+Jak bit odwołania jest zerowy to patrzymy na czas ostatniego odwołania do ramki, jak odwołanie nastąpiło dawniej niż <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi mathvariant="normal">Δ</mi><mi>T</mi></msub></mrow><annotation encoding="application/x-tex">\Delta_T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord">Δ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> to mamy potencjalną ofiarę, jednak jeśli jest również ustawiony bit modyfikacji, to inicjujemy zapis tej strony na dysk ale dalej szukamy taką ofiarę, która była odpowiednio dawno używna i nie ma bitu modyfikacji. A jak bit modyfikacji był zerowy to mamy ofiarę idealną, bo nie była dawno używana i nie trzeba jej zapisywać na dysku. </p><p id="baf8fad8-6867-4e1e-9a07-0060a33adca8" class="">Co jak nie znajdziemy idealnej ofiary? Wtedy wybieramy drugą najlepszą ofiarę, czyli usuwamy ramkę, która była modyfikowana ale była dostatecznie dawno używana. A najgorszym przypadku, jak wszytkie ramki były używane niedawno, no to mamy sygnał, że używamy więcej stron niż mamy ramek, więc aby uniknąć migotania stron wstrzymujemy wykonanie jakiegoś innego procesu i liczymy, że problematyczne procesy skończą swoje działanie. </p><h3 id="82dff0f9-a9fe-4118-936f-4ebc81099725" class="">Inne algorytmy wymiany</h3><ul id="1ea6d22a-fac1-479a-94f5-573d1812058f" class="bulleted-list"><li style="list-style-type:disc">Least Frequently Used - usuwa się stronę z najmniejszym licznikiem odwołań.</li></ul><ul id="ae6b06ba-246f-4751-be6b-20ed39842ccd" class="bulleted-list"><li style="list-style-type:disc">Most Frequently Used - usuwa się stronę z największym licznikiem odwołań.  </li></ul><ul id="83a72840-f4ed-4708-a03c-167f679cd57d" class="bulleted-list"><li style="list-style-type:disc">Losowanie strony do usunięcia - o dziwo sprawia się całkiem nieźle.</li></ul><h2 id="3365f541-b322-4d3a-b284-98f9e01c0b88" class="">Kilka sztuczek stosowanych do wymiany stron w praktyce</h2><ul id="2a3e5d60-8829-45ae-9f20-07d1cbf489fa" class="bulleted-list"><li style="list-style-type:disc"><strong>Pula wolnych ramek</strong>: SO zawsze trzyma kilka wolnych ramek, i jak potrzeba jakąś stronę wczytać to SO zleca wczytanie strony i w międzyczasie szuka rakmi do zwolnienia, aby pula zachowała swój rozmiar.</li></ul><ul id="35eae6a4-32f1-434d-8441-da7f94164246" class="bulleted-list"><li style="list-style-type:disc"><strong>Pamiętamy do kogo należała wolna ramka</strong>: ramki nie są czyszczone więc jak następuje błąd braku strony to sprawdzamy czy przypadkiem ramka, która zawierała tę stronę nie została jeszcze nadpisana.</li></ul><ul id="84da2702-8791-42ed-a520-cd794df03359" class="bulleted-list"><li style="list-style-type:disc"><strong>Lista zmodyfikowanych stron</strong>: Jak dysk ma wolne przebiegi to na zapas, dysk inicjuje zapis zmodyfikowanych stron (z zapalonym bitem modyfikacji). Jak trzeba będzię, którąś z tych stron usunąć to dysk już będzie miał ją zapisaną, więc będzie można ją usuwać szybciej. </li></ul><h2 id="0734ca26-1bf2-4501-947f-c4d2c33fe7ec" class="">Przydział ramek dla procesów </h2><p id="1ece38ac-0984-49f4-be27-d7ae0679c8d3" class="">Zastanówmy się ile właściwie każdemu procesowi trzeba przydzielić ramek aby zapewnić prawidłową pracę. To oczywiście zależy od architektury, ale mamy kilka ograniczeń, na które trzeba zwrócić uwagę. 
+Po pierwesze, musimy zadbać aby w pamięci były strony, na których znajduje się kod danego rozkazu i jego argumentów. Co więcej argumenty mogą być wskaźnikami do innych miejsc w pamięci. Pamiętajmy również, że te wszystkie rzeczy mogą leżeć na granicy dwóch stron, wtedy trzeba wczytać obie aby wykonać rozkaz. </p><p id="a3af919f-4a30-4478-bcb6-1995cd53529b" class="">Możemy rozważyć kilka strategi przydziału ramek: </p><ul id="9778d15a-cc3b-46ee-8908-b0d61c48d3d0" class="bulleted-list"><li style="list-style-type:disc">Przydział równy: proste, ale różne procesy mają różne zapotrzebowanie i różne priorytety, więc niezbyt praktyczne podejście. </li></ul><ul id="6f6ab4a2-c499-4a96-b2b7-39a585118b01" class="bulleted-list"><li style="list-style-type:disc">Przydział propoercjonalny: każdemu przydzielamy ilość ramek proporcjonalna do jego zapotrzebowań. </li></ul><ul id="bd371edb-47d8-4604-a075-ff83811efe03" class="bulleted-list"><li style="list-style-type:disc">Przydział priorytetowy: przydział zgodnie z priorytetem. </li></ul><hr id="93c447fd-f1f0-436c-9848-be3c1aab8ff6"/><h1 id="0eb9573d-474f-4dbd-a804-84be6e210f2a" class="">Migotanie Stron</h1><p id="ce6eae9e-fb79-4f0f-b18a-95a951a1b891" class="">Jest to zjawisko gdy jakiś proces nie ma wystarczającej liczby ramek, a wszystkie jego strony są aktywnie używane. Czyli po prostu nie wszystkie strony, które są często używane przez proces nie mieszczą się w pamięci fizycznej. </p><h3 id="9ae1e9b1-9870-4593-9b94-465b88dfe382" class="">Migotanie stron przy lokalnej strategii zamiany stron </h3><p id="c74461d4-ca43-4dd4-a7a7-9875a38b41f4" class="">Przy lokalnej strategii zamiany stron, skoro nie wszystkie potrzebne strony mieszczą się w pamięci no to wyskakuje błąd braku strony, wtedy usuwamy inną stronę tego procesu, która znów zaraz będzie potrzebna i znów będzie błąd braku strony. </p><p id="23e07ce1-9c71-419b-8660-f66e7e31f18e" class="">Przy takim zjawisku komputer spędza więcej czasu na wymianach tych stron niż na faktycznym wykonywaniu kodu, co więcej wydłuża się kolejka do urządzenia stronicującego, co ma wpływ na szybkość dostępu do pamięci przez inne procesy. </p><h3 id="af78cd79-56ce-450c-bf49-b294cca57eed" class="">Migotanie stron przy globalnej strategi</h3><p id="635a9cfb-15e2-40d4-bf8b-e3860469f38e" class="">W takiej sytuacji migotający proces dla swojej wygody będzie zabierał ramki innym procesom, to zatem prowadzi do częstych braków stron w innych procesach, ale wtedy każdy z tych procesów będzie musiał zaraz zlecać operacje wejścia-wyjścia, żeby znów przywołać tę stronę, którą mu zabrano. Wtedy następuje spadek wykorzystania CPU no bo procesy czekają w kolejce na wczytanie stron, SO zauważa, że CPU się nudzi no to odpala kolejne procesy, żeby procor się nie nudził, ale wtedy już bardziej zapychamy pamięć, której już i tak nie ma. Wtedy już nic się nie da i każdy czeka na wczytanie strony. </p><h3 id="d5a6488e-818b-41e9-9a6d-6b0d953c1748" class="">Jak sobie radzić z migotaniem stron? </h3><p id="c607a0bc-e410-4d34-aa06-b73d809a4b83" class="">No nie ma wyjścia, trzeba zawiesić kilka procesów i zwolnić ich pamięć, aby migotające procesy mogły się skończyć. </p><hr id="62f9db3d-97a6-4f47-be81-b18aa67e2a79"/><h1 id="1091c1fb-6031-4e95-9567-11165dcacc99" class="">Różne techniki wykorzystujące pamięć writualną</h1><h3 id="daf08033-f6ed-4b4c-a52e-db32c563642d" class="">Copy on write </h3><p id="442a67d1-3941-4d12-ab31-f64eddc401de" class="">Technika wykorzystywana przy forku, póki drugi proces nie będzie pisał to współdzieli pamięć z pierwszym procesem, SO zwkleka z kompiowaniem pamięci tak długo jak to możliwe. Jak drugi proces spróbuje pisać to następuje przerwanie i SO kopiuje dane dla drugiego procesu. </p><h3 id="a242c906-ddce-4c2a-9cbb-267d288541ca" class="">Mapowanie pliku na pamięć </h3><p id="58f76d88-96bf-4525-851c-8b77fcd14b83" class="">Możemy zmapować przestrzeń na dysku do przestrzeni w pamięci, wtedy proces może pisać i czytać do pamięci pomocniczej przy użyciu zwykłych operacji czytania i pisania. Pierwszy dostęp powoduje błąd braku strony i normalnie następuje wczytanie strony. Zamknięcie pliku powoduje zapisanie na dysku. W takiej sytuacji nie trzeba implementować operacji wejścia wyjścia, wystarczy korzystać ze zwykłego systemu stronicowania. </p><p id="14b5edb9-7fb9-40ad-aa46-87fa71856b27" class="">
+</p></div></article></body></html>

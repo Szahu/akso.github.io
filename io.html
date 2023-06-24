@@ -1,0 +1,678 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>7. Urządzenia wejścia-wyjścia, systemy plików</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-interactiveBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="9c823003-f4dd-4bed-abad-c0896deaf903" class="page sans"><header><h1 class="page-title">7. Urządzenia wejścia-wyjścia, systemy plików</h1><p class="page-description"></p></header><div class="page-body"><h1 id="4a7dc4de-cb3f-4827-a893-fa07b20fb856" class="">Kategoryzacja</h1><h3 id="f37642d2-3451-4580-84f9-94b4b49f3055" class="">Urządzenia blokowe i znakowe</h3><p id="981b97a1-e2ff-4d4c-83ec-2b52e31c4858" class="">Rozróżniamy urządzenia IO na dwie grupy (aczkolwiek są wyjątki, np czasomierze): </p><ul id="803e7d8b-7d88-47dd-94c4-c142e845d056" class="bulleted-list"><li style="list-style-type:disc"><strong>Urządzenia blokowe:</strong> Informacje są przechowywane w blokach, w rezultacie zapis i odczyt również odbywa się w blokach, nie można sobie odczytywać po bajcie, np. dyski twarde.</li></ul><ul id="80e5ded1-11cf-4105-8eab-a364e0a22cc9" class="bulleted-list"><li style="list-style-type:disc"><strong>Urządzenia znakowe: </strong>odczytuje i zapisuje strumień danych, bez mozliwości adresowania poszczególnych znaków. Przykładem jest drukarka, myszka. </li></ul><h3 id="f9a8f4c1-8b1f-40a5-87a8-c2be2c033a7e" class="">Sposób dostępu do urządzenia</h3><p id="12c0eda4-c0c1-49fb-8186-853c3c13c2d4" class="">Rozróżniamy dwa sposoby dostępu do urządzeń: </p><ul id="5e8ea2f0-096d-4062-ae0d-625f848fc221" class="bulleted-list"><li style="list-style-type:disc"><strong>Dostęp sekwencyjny</strong>, czyli taki, w którym urządzenie przesyła dane zawsze w określonej kolejności. </li></ul><ul id="3b94b72d-36f4-458f-8e9c-0f62b9e19e1f" class="bulleted-list"><li style="list-style-type:disc"><strong>Dostęp swobodny</strong>, tutaj użytkownik może dowolnie wybrać miejsce odczytu lub zapisu. </li></ul><h3 id="1227a9d3-a4e8-42c2-b8c3-0f0f2cbc6618" class="">Rodzaj komunikacji </h3><ul id="3ed63668-9d7b-4e3d-9bf1-2d292c7aabfc" class="bulleted-list"><li style="list-style-type:disc"><strong>Synchroniczny</strong> - w tym modelu kolejne porcje danych pojawia się w ściśle określonych momentach czasu, dyktowanych przez zegar systemowy. </li></ul><ul id="530fca93-d8d3-4c81-a0d3-d01123124bea" class="bulleted-list"><li style="list-style-type:disc"><strong>Asynchroniczna</strong> - procesor nie jest w stanie przewidzeć kiedy otrzyma kolejne porcje danych.</li></ul><h3 id="bb726fb3-943e-444a-93cc-5d75b6a6f92b" class="">Sposób współdzielenia </h3><ul id="eb8b0040-aa57-45e9-8c04-443c8de6f84e" class="bulleted-list"><li style="list-style-type:disc"><strong>Wyłączny dostęp</strong> - tylko jeden proces może korzystać z danego urządzenia w danej chwili. </li></ul><ul id="821f148f-49f9-4fdf-8645-39f22b1d7528" class="bulleted-list"><li style="list-style-type:disc"><strong>Współdzielenie</strong> - wiele procesów może jednocześnie korzystać z urządzenia. </li></ul><h1 id="d924915c-c7a3-4337-8be0-7fe99adcea47" class="">Obsługa urządzeń przez SO </h1><p id="58fd145c-fe17-48e6-9e6a-749e26c8924f" class="">System operacyjny ma na celu udostępnienie jednolitego intefejsu dla użytkownika do obsługi urządzeń wejścia-wyjścia, aby ten mógł wygodnie korzystać z różnych urządzeń. Aby to osiągnąć SO grupuje urządzenia według powyższych kategorii, mamy urządzenia blokowe, znakowe oraz urządzenia odwzorowywane na pamięć. Dodatkowo mogą to być gniazda sieciowe i inne. </p><p id="b302e5f4-0cb3-4170-9a85-f34930766796" class="">Moduł wejścia-wyjścia systemu operacyjnego ma budowę warstwową: </p><ul id="794783ec-b18a-4310-8145-3fd017883e40" class="bulleted-list"><li style="list-style-type:disc">Warstwa sprzętowa</li></ul><ul id="4350d998-d412-43bc-9649-f2d139050bf5" class="bulleted-list"><li style="list-style-type:disc">Podprogram obsługi przerwań - niskopoziomowy kod obsługi przerwań, również zależy od urządzeń. </li></ul><ul id="c4cce4c3-1ae1-46a9-a87a-77d9d6b54670" class="bulleted-list"><li style="list-style-type:disc">Podprogram obsługi urządzeń - określają w jaki sposób dochodzi do zapisania lub odczytu danych, zależne od urządzenia. Przykładowe czynności: <ul id="aab43be5-80f4-4b32-a25a-4f5bdc3483b6" class="bulleted-list"><li style="list-style-type:circle">Sprawdzanie poprawności parametrów. </li></ul><ul id="d91a5f83-dc92-4103-a7cc-b9b5f0008819" class="bulleted-list"><li style="list-style-type:circle">Ustawianie miejsca ramienia, czekanie na pozycje talerza. </li></ul><ul id="a6e4fa32-95bd-4b42-9218-0eab4a29a81a" class="bulleted-list"><li style="list-style-type:circle">Odczytanie/zapisanie danych</li></ul><ul id="f5805ef5-01d0-43f8-ac30-440f5095d929" class="bulleted-list"><li style="list-style-type:circle">itp…</li></ul></li></ul><ul id="99b94bda-e6d0-465e-b848-b2b742b257b3" class="bulleted-list"><li style="list-style-type:disc">Warstwa SO niezależna od urządzenia - abstrakcja na poziomie systemu operacyjnego (np. <em>read </em>w linuxie). Przykładowe czynności: <ul id="2d6e4b48-4935-4390-8a8b-fc0beb49ee58" class="bulleted-list"><li style="list-style-type:circle">Realizuje czynności wspólne dla wszystkich urządzeń. </li></ul><ul id="87b77f60-a71f-4c1a-9558-1a4ee7ec85f4" class="bulleted-list"><li style="list-style-type:circle">Dostarcza interface do obsługi urządzeń. </li></ul><ul id="d81458ae-5499-418b-926b-502a4b7df380" class="bulleted-list"><li style="list-style-type:circle">Zapewnia wspólną przestrzeń nazw. </li></ul><ul id="d8d59a8f-4e4e-42c6-96cc-dab965ec6526" class="bulleted-list"><li style="list-style-type:circle">Dba o zgłaszanie błędów.</li></ul><ul id="921fd316-7749-45f3-bc26-087705c65fed" class="bulleted-list"><li style="list-style-type:circle">Buforuje dane</li></ul><ul id="0cb2137c-7154-4a3a-b201-17da6eff7e0d" class="bulleted-list"><li style="list-style-type:circle">itp…</li></ul></li></ul><ul id="eec0cf23-5f00-477a-a510-bd9edfe5d45f" class="bulleted-list"><li style="list-style-type:disc">Oprogramowanie użytkownika - na przykład <em>stdio.h</em></li></ul><h3 id="e85232d7-8d94-466d-804e-691873ff31f8" class="">Połączenie urządzeń z komputerem </h3><p id="92a639fd-f57e-4710-a523-36ec7ad40a46" class="">Sygnały elektryczne są przesyłane przewodowo lub bezprzewodowo. Jak wiele urządzeń korzysta z jakiegoś połączenia, to takie połączenie nazywamy szyną (magistralą). Układ elektroniczny sterujący urządzeniem to oczywiście sterownik, może on być po prostu programem albo całym małym systemem mikroprocesorowym.  </p><h3 id="96bae5a1-f98c-4bdd-bb6d-f03c4677182e" class="">Komunikacja ze sterownikiem </h3><p id="ceb72237-1070-4b43-b0a6-fd1e8e50858c" class="">Sterownik ma jakieś rejesetry, które zawierają parametry sterujące urządzeniem, informacje o jego stanie bądź odczytane/zapisane dane. Procesor przesyła do sterownika ustalony ciąg bitów, w ten sposób ustawiając wartość danego rejestru na odpowiednią wartość. </p><p id="6de75b6f-cffd-4f09-87a5-d92e423f671e" class="">Tę komunikację można realizować przez specjalne rozkazy maszynowe, które komunikują się z <strong>portami </strong>urządzenia, można również jednak to przeprowadzić za pomocą <strong>odwzorowania </strong>pamięci operacyjnej na rejestry urządzenia, wtedy można komunikować się z urządzeniem za pomocą zwykłych rozkazów odczytu i zapisu.  </p><p id="a3b3db03-5452-472c-b60e-2f3a1569e1e1" class="">Komunikacje można również przeprowadzać za pomocą <strong>odpytywania. </strong>Mianowicie, procesor sprawdza bit gotowości urządzenia, jak urządzenie jest wolne to procesor wpisuje do portu odpowiednie dane i inicjuje transmisję. Jak bit gotowości nie jest zapalony to procesor czeka chwilę i sprawdza ponownie. Takie podejście ma sens jak urządzenie jest szybkie i wiadomo, że raczej bardzo długo nie będziemy czekać na gotowość urządzenia. </p><p id="e9307b86-8a62-44de-b0d8-d25e1306df75" class="">Jak urządzenie nie jest takie szybkie to możemy skorzystać z komunikacji za pomocą <strong>przerwań</strong>, czyli  procesor zleca jakieś zadanie i jak urządzenie skończy to wysyła przerwanie aby dać poinformować o tym fakcie procesor (tak naprzykład jest z DMA).</p><h1 id="ebce2ae2-d334-4047-81db-50beebf65e6a" class="">Dysk twardy </h1><p id="a8957446-6870-4741-9fea-d71a870b92b2" class="">Dysk twardy jest zbudowany z następujących komponentów: </p><ul id="f70df005-7530-4411-8273-c5c93846d30f" class="bulleted-list"><li style="list-style-type:disc">Talerze</li></ul><ul id="0402c821-1d97-4b6f-94be-8c7e64df50a5" class="bulleted-list"><li style="list-style-type:disc">Głowica z ramionami</li></ul><ul id="71d8eed2-e257-4bce-ba95-8a1dc0ee066e" class="bulleted-list"><li style="list-style-type:disc">Cylindry </li></ul><ul id="9524ed99-aa47-4374-91bd-b12e1d163034" class="bulleted-list"><li style="list-style-type:disc">Ścieżki </li></ul><ul id="8ad1f7de-98da-4dbf-87ff-e69390aed4f9" class="bulleted-list"><li style="list-style-type:disc">Sektory</li></ul><p id="501c11ee-3319-4617-b05c-afa8dd8a8e3f" class="">W dysku są na sobie nastackowane talerze, a między nie wchodzi głowica z ramionami. Głowica może się ruszać aby dosięgnąć każdy punkt na promieniu talerza. Ścieżką określamy koło jakie wyznacza czubek głowicy, cylindrem określamy zaś przekrój talerzy wyznaczony ścieżką. </p><p id="e0d90bb4-4a1b-49d4-a2f9-41ed4ccbc5d2" class="">Aby wykonać odczyt lub zapis najpierw dysk musi ustawić głowicę nad odpowiedni cylinder a następnie poczekać, aż dysk się obróci aby głowica trafiła nad dane, gdzie chce odczytać/zapisać. </p><p id="86109f98-badb-443a-99e3-b2b8d6ec10f1" class="">Sektor to taki wycinek (kawałek tortu), który jest częścią podziału dysku. </p><h3 id="1b14e734-0810-479a-ab30-1221d7d156eb" class="">Parametry dysku: </h3><ul id="66c981ba-c6f5-4cd9-a701-3fdce97d028e" class="bulleted-list"><li style="list-style-type:disc">Prędkość obrota - prędkość z jaką krecą się talerze</li></ul><ul id="9f0907bb-4717-48a3-9d0c-2a7ebbc5a622" class="bulleted-list"><li style="list-style-type:disc">Szybkość przesyłu danych </li></ul><ul id="0ac32581-b109-4ee3-a8ec-0f33da69e052" class="bulleted-list"><li style="list-style-type:disc">Czas wyszukiwania - czas potrzebny na ustawienie głowicy nad odpowiednim cylindrem </li></ul><ul id="6aba9860-0016-4193-8b22-5a0286daf260" class="bulleted-list"><li style="list-style-type:disc">Opóźnienie obrotowe - czas podtrzebny na podjechanie odpowiedniego sektora pod głowicę</li></ul><ul id="86e09678-ce2d-43a1-af69-606257d57875" class="bulleted-list"><li style="list-style-type:disc">Czas dostępu do danych to suma czasu wyszukiwania i opóźnienia </li></ul><h3 id="d0ccc30c-8ff0-4a95-a9db-5f9ae0dcc842" class="">Upakowanie danych na dysku </h3><p id="a71a8d70-6e8b-4e35-97e1-34ff66054185" class="">Możemy rozróżnić dwa sposoby upakowania danych na dysku twardym. </p><ul id="09b011fb-999b-477e-8610-b20d881a4d2f" class="bulleted-list"><li style="list-style-type:disc">Dyski o stałej prędkości obrotowej: w takiej sytuacji gęstość bitów maleje coraz bliżej krawędzi talerza, w rezultacie mamy zmienną prędkość odczytu danych. Takie dyski to na przykład dyski magnetyczne.</li></ul><ul id="9b2dcb6f-5328-4f4e-a48b-302f034cba92" class="bulleted-list"><li style="list-style-type:disc">Dyski o stałej prędkości liniowej - gęstość bitów na jednostkę długości ścieżki jest stała, więc prędkość oborota musi być różna. Dzięki temu mamy stałą prędkość przesyłu danych, do takich dyskó zaliczają się CD-ROM oraz DVD-ROM. </li></ul><h2 id="0c1fcf85-a957-4379-9de9-4f43b8c93401" class="">Współpraca systemu opercyjnego i dysku </h2><h3 id="2c6a29e0-9232-42b9-b680-81e410442da9" class="">Adresowanie współczesnych dysków</h3><p id="053a5dc4-a05a-4f6c-b41c-86ba8f6f49ae" class="">Dysk twardy jest urządzeniem blokowym, aby z niego korzystać mamy jednowymiarową tablicę bloków, więc z punktu widzenia SO mamy po prostu indeks bloku gdzie chcemy pisać lub czytać. Sterownik dysku jest odpowiedzialny za odwzorowanie tych indeksów na sektory, ścieżki i cylindry. 
+Jeśli jakiś sektor zostanie uszkodzony i sterownik to wykryje to odwzorowanie na ten uszkodzony sektor zostaje przemapowane na jakiś rezerwowy sektor. </p><h3 id="30bda21a-c45f-42be-9dce-cac6a7a5b8a3" class="">Planowanie dostępów do dysku </h3><p id="e19af006-1908-4de5-b364-69e9ebe36fc6" class="">Kiedyś aby zooptymalizować dostęp do dysku, SO kolejkował zamówienia na dostęp do dysku, i jak miał co jakiś czas brał wszystkie zamówienia i tak je ustawiał aby zoptymalizować pracę głowicy. Rozważmy kilka algorytmów takiej optymalizacji: </p><ul id="7e211a9c-1eac-451e-89b9-e65d23382031" class="bulleted-list"><li style="list-style-type:disc">FCFS (<em>First Come First Served</em>) - czyli SO po prostu nie robi żadnej optymalizacji tylko wykonuje zamówienia zgodnie z kolejnością. Jak kolejne cylindry są daleko od siebie to może się okazać, że ta głowica cały czas musi skakać w te i spowrotem. </li></ul><ul id="04e21936-dc4e-49cb-9ed6-abbd110b8f6d" class="bulleted-list"><li style="list-style-type:disc">SSTF (<em>Shortest Seek Time First</em>) - obsługujemy najpierw zamówienia, który wymagają najkrótszego ruchu głowicą. Jest to algorytm szybki, ale istnieje ryzyko zagłodzenia jak jakieś zamówienie będzie wymagało dużego ruchu głowicą. </li></ul><ul id="80b8f1d0-b29f-4cf3-bc77-366e11db4ef6" class="bulleted-list"><li style="list-style-type:disc">SCAN - strategia używana w praktyce (lub jej modyfikacje). Tutaj głowica chodzi w z lewej do prawej potem znów w lewo i tak dalej, po drodze obsługując zamówienia, który dotyczą cylindrów, które akurat są pod głowicą. Wadą jest fakt, że jak głowica dojedzie do jednej krawędzi, to żądania, która dotyczą drugiej krawędzi będą długo czekać. </li></ul><ul id="18cfce3a-81f8-456b-994e-857c8f71cd40" class="bulleted-list"><li style="list-style-type:disc">C-SCAN - jak wyżej ale aby ujednolicić czas czekanie po prostu idziemy od lewej do prawej i jak dojdziemy do końca to wracamy od razu na lewą krawędź nic nie obsługując i powtarzamy procedurę. </li></ul><ul id="e903782b-175c-4162-be4c-0d0e5f5ff0fd" class="bulleted-list"><li style="list-style-type:disc">LOOK, C-LOOK - tak jak wyżej ale nie dojeżdżamy do końca tylko do najdalszego zamówienia, i wtedy wracamy na sam początek. </li></ul><p id="a2b99075-daf9-4d52-a6d4-9f3059d1c296" class="">Oczywiście te strategie nie działają jak System Operacyjny nie ma wiedzy jakie dane znajdują się na jakich cylindrach, co jest często sytuacją w dzisiejszych dyskach. Mógłby tym się zająć sterownik dysku, ale z koleji SO często wyamaga danej kolejności zapisu lub odczytu zapis, więc takie podejście też nie działa. </p><h3 id="1db94e1b-5a29-47f2-9524-c9d402110244" class="">Formatowanie dysku </h3><p id="f8dbabff-9f18-4be0-9070-28d21dd47fd1" class="">Formatowanie fizyczne - dysku polega na umieszczeniu we wszystkich sektorach, nagłówków z numerem sektora, obszarów danych i kodów sprawdzających. </p><p id="1b5d693e-e2b0-44c5-b91f-a07cff887ac3" class="">Podział na partycje - podział na grupy cylindrów. </p><p id="34586631-7df6-4d8e-847d-39808dcfac56" class="">Formatowanie logiczne - utworzenie nowego systemu plików</p><hr id="3b194257-31b6-4509-a720-953f96bbdc2b"/><h1 id="08c9bd20-5c4b-4222-9e60-42e58e70ddf5" class="">Systemy Plików</h1><p id="6f234ddf-9cda-4a90-b842-17c60a22a802" class="">Plik, czyli logiczny pojemnik na dane. Aby pliki zoorganizować System Operacyjny dostarcza System plików, czyli podystem umożliwiający użytkownikom tworzenie plików, dostęp do nich i manipulacje. Do tego służy interface systemy plików - czyli funkcje systemowe, które służą do obsługi plików. </p><p id="1ef81f30-fd5d-446a-ae94-4f75df4b9f2c" class="">Systemy plików mogą wspólistnieć w obrębie jednego systemu. Mamy zawsze jeden podstawy system plików, który zawiera katalog główny systemu. Dodatkowe systemy można przyłączyć (montowanie) do istniejącej struktury.</p><h2 id="83ec5687-ffb3-451d-b311-62cbc6b4776a" class="">Interface systemu plików w Unixie </h2><p id="ff3b64b5-0e2d-4f85-a8a3-f44ab4c6ec65" class="">Różne rzeczy można mapować na systemu plików, między innymi faktyczne pliki na dysku, pliki na serwerze, procesy, lub urządzenia typu USB drive. </p><p id="795ec537-7351-4d7c-8eec-66d954f41214" class="">Każdy system plików udostępnia taki sam interface, niezależnie od tego czy jest to system plików naszym dysku lub na dysku sieciowym itp…. </p><h2 id="017a1d40-f7ee-40b2-9372-33d106693fe2" class="">Pliki</h2><p id="ca29e874-2eca-44d8-8161-7701625e0e3f" class="">Jądro systemu oferuje operacje do nazywania plików, ich organizacji oraz kontroli dostępu. Dla jądra plik to jest po prostu pewien ciąg bajtów, nie zachodzi tutaj żadna interpretacja. Dostęp do plików może być sekwencyjny lub swobodny. </p><h2 id="2ef5a373-8327-41da-acca-03f9279d1192" class="">Katalogi</h2><p id="944cf4ba-452c-41f7-9b08-e75309d63e01" class="">Pliki są zorganizowane w hierarchiczną przestrzeń nazw. Taka przestrzeń może przyjąć postać płaską, być drzewiasta lub, tak jak jest faktycznie w Unixie - grafu acyklicznego. W katalogach można dodać dowiązania do plików, które są w innych katalogach, przy czym cykl jest zabroniony. </p><p id="c65b816c-a7df-4eb7-a1d9-5132e9b792e9" class="">Każdy plik można zidentyfikować za pomocą jego nazwy ścieżkowej bezwględnej, czyli od korzenia, lub względnej od katalogu roboczego procesu. Każdy proces ma związany ze sobą katalog roboczy. </p><h3 id="bdfbb412-559f-407f-83fe-b66f31c84be5" class="">Dowiązanie </h3><p id="850aac4c-f6bd-4032-9b56-9427156f3192" class="">Dowiązanie jest odniesieniem do jakiegoś pliku w katalogu. Do każdego pliku może być wiele dowiązań, więc pliki nie mają jednej unikatowej nazwy ścieżkowej. </p><p id="04b810e6-9b44-4dcc-b125-30a26c7f10c1" class="">Mamy dowiązania sztywne i symboliczne, dowiązanie symboliczne to specjalny plik, który wskazuje na inny plik (jak skrót w windowsie). Dowiązanie sztywne, to po prostu dowiązanie symboliczne, które jest nierozróżnialne, między sobą. Dowiązania symboliczne są generalnie niewidoczne dla programów (z pewnymi wyjątkami). </p><h3 id="fa9a0048-792d-4cca-bc69-5fc972ea29a1" class="">Reprezentacja katalogu</h3><p id="af74a22a-9314-40bc-8ea3-f78bad81f583" class="">Każdy katalog jest tak naprawdę plikiem, który zawiera spis plików, które się w nim znajdują. Standard POSIX określa standardowe programy do czytania katalogów. </p><h3 id="4286e41a-cc80-4b1b-9b52-ea6655bc2399" class="">Atrybuty pliku </h3><p id="d95a5cef-529a-48aa-b911-96e0aa5b741c" class="">Atrybuty i indentyfikacja plików następuje poprzez i-węzeł. W systemie operacyjnym jest tablica i-węzłów, i każdy i-węzeł to jeden plik (wirtualne też, i te reprezentujące urządzenia też). Implementacja i-węzłą jest zależna od konkretnego systemy plików, aczkolwiek atrybuty można odczytywać funkcjami systemowymi w postaci niezależnej od sytemu plików. </p><p id="4ce84325-c324-47df-8f14-deb30d7f1f19" class="">Typowe atrybuty pliku to: </p><ul id="cf80dd09-f824-44f0-b6b7-07b245eefbd5" class="bulleted-list"><li style="list-style-type:disc">typ pliku</li></ul><ul id="8b11a257-76f0-4427-bc8b-025bcd5cf056" class="bulleted-list"><li style="list-style-type:disc">liczba dowiązań do pliku </li></ul><ul id="626c24cd-e460-486e-a75a-e84733e16f72" class="bulleted-list"><li style="list-style-type:disc">rozmiar pliku </li></ul><ul id="d239214f-61fe-4478-87e3-9b528ca7dc2f" class="bulleted-list"><li style="list-style-type:disc">indentyfikator urządzenia, na którym znajduje się plik </li></ul><ul id="b68a79fb-8f7d-454a-89ba-2af9809a8759" class="bulleted-list"><li style="list-style-type:disc">numer i-węzła (unikatowy w obrębie dysku logicznego). Nie jest on przechowywany w i-węźle lecz w katalogu</li></ul><ul id="00efc57c-5bbc-454f-ad0b-040d62860f08" class="bulleted-list"><li style="list-style-type:disc">właściciel pliku </li></ul><ul id="c8c0edc5-56ec-4672-803f-b1532452d50e" class="bulleted-list"><li style="list-style-type:disc">prawa dostępu do pliku </li></ul><ul id="35b87e02-6e7e-421a-ab28-2bfbf5cd9341" class="bulleted-list"><li style="list-style-type:disc">znaczniki czasowe </li></ul><h3 id="5646a9c6-2824-4588-8db7-7f90f658f9c8" class="">Deskryptor pliku </h3><p id="59847941-f366-4c74-b596-fb64e16a42c3" class="">Jak chcemu manipulować jakimś plikiem no to najpierw trzeba go otworzyć. Funkcja systemowa <em>open </em>pobiera nazwę ścieżkową pliku jako argument i zwraca w wyniku deskryptor pliku. </p><p id="4ed589e8-304f-4d8d-be20-ff14f2940319" class="">Każdy proces ma katalog roboczy, oraz domyślną maskę, która dyktuje jakie uprawnienia zabrać tworzonym przez ten proces plikom. </p><p id="bf0626ef-84c6-49a4-9de8-a8776778b703" class="">Deskryptor jest powiązany z procesem, więc każde otwarcie wiąże się z nowym deskryptorem. Ten deskryptor dalej służy do manipulacji plikiem, każdy dyskryptor wskazuje na obiekt w tablicy otwartych plików w systeime gdzie otwarty plik jest reprezentowany przez obiekt, który zawiera wszystkie potrzebne informacje na temat danego pliku. </p><p id="b03e488c-f3e0-4d21-8d70-cdffa5a47653" class="">O deskryptorze można myśleć jako o sesji dostępu do pliku. </p><p id="16dc6273-9238-4426-bd94-098c0dcadb19" class="">Aby zamknąć plik należy urzyć funkcji systemowej <em>close</em>, przy czym wszystkie pliku otwarte przez dany proces są zamykane gdy proces kończy działanie.</p><h3 id="89865276-c55c-41e1-8c2f-1feb68840ab0" class="">Tablica otwartych plików i tablica i-węzłów </h3><p id="10c3dd1c-2fc1-41c2-a9bd-f580d5e4e4bc" class="">Gdy jakiś proces otworzy jakiś plik w systemowej tablicy otawrtych plików pojawia się nowa pozycja z informacjami odnośnie tego pliku. W tych informacjach zawiera się dowiązanie do pozycji w systemowej tablicy i-węzłów, gdzie dana pozycja zawiera informacje o fizycznym przechowywaniu pliku na dysku. </p><p id="abb688aa-26d9-43cb-8439-4d7112cd3a6b" class="">Warto pamiętać, że i-węzły znajdują się w pamięci operacyjnej gdy mamy jakieś otwarte pliki, ale również na dysku twardym aby pamiętać strukture i informacje o plikach. </p><p id="654ae941-1e53-4395-8994-6f74f506f90c" class="">Każda pozycja w obu tablicach ma licznik dowiązań, czyli na przykład ile procesów działa nad danym plikiem, jak licznik dowiązań zejdzie do zera to system wie, że informacje o i-węźle i pliku mogą być usunięte z pamięci operacyjnej. </p><h3 id="c630f790-e112-431f-86e1-c27825e5447a" class="">Nakładanie blokad na pliki </h3><p id="16882cc7-1fff-4db3-9165-b16226647414" class="">Na pliki można narzucać blokady, które blokuję pewne działania. Na przykład jak jakiś proces chce się upewnić, że nikt inny nie będzie pisał po pliku to proces może sobie zablokować taki plik. </p><p id="67fc5f5a-ecf5-4f5d-8dac-15389c013bb0" class="">Mamy blokady doradzane, czyli takie, które nie są narzucane przez kernel, tylko o ich przestrzeganiu musi zadbać programista. Z koleji, blokady obowiązkowe powodują błąd jeśli użytkownik spróbuje przełamać blokadę. </p><p id="c8353965-da09-49a8-a878-5b3d10101216" class="">
+</p></div></article></body></html>
